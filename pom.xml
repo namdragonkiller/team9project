@@ -1,0 +1,241 @@
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <artifactId>mvc</artifactId>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-war-plugin</artifactId>
+        <groupId>org.apache.maven.plugins</groupId>
+        <version>3.4.0</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <compilerArgs>
+            <arg>-parameters</arg>
+          </compilerArgs>
+          <source>21</source>
+          <target>21</target>
+        </configuration>
+        <groupId>org.apache.maven.plugins</groupId>
+        <version>3.13.0</version>
+      </plugin>
+    </plugins>
+  </build>
+  <dependencies>
+    <!--  Spring  -->
+    <dependency>
+      <artifactId>spring-webmvc</artifactId>
+      <groupId>org.springframework</groupId>
+      <version>${spring-framework.version}</version>
+    </dependency>
+    <dependency>
+      <artifactId>jakarta.annotation-api</artifactId>
+      <groupId>jakarta.annotation</groupId>
+      <version>2.1.1</version>
+    </dependency>
+    <!--  AspectJ  -->
+    <dependency>
+      <artifactId>aspectjrt</artifactId>
+      <groupId>org.aspectj</groupId>
+      <version>${aspectj.version}</version>
+    </dependency>
+    <!--  Logging  -->
+    <dependency>
+      <artifactId>logback-classic</artifactId>
+      <groupId>ch.qos.logback</groupId>
+      <version>${logback.version}</version>
+    </dependency>
+    <dependency>
+      <artifactId>slf4j-api</artifactId>
+      <groupId>org.slf4j</groupId>
+      <version>${slf4j.version}</version>
+    </dependency>
+    <!--  Servlet  -->
+    <dependency>
+      <artifactId>jakarta.servlet-api</artifactId>
+      <groupId>jakarta.servlet</groupId>
+      <version>${jakarta-servlet.version}</version>
+    </dependency>
+    <dependency>
+      <artifactId>jakarta.servlet.jsp.jstl</artifactId>
+      <groupId>org.glassfish.web</groupId>
+      <version>${jakarta-jstl.version}</version>
+    </dependency>
+    <dependency>
+      <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
+      <groupId>jakarta.servlet.jsp.jstl</groupId>
+      <version>${jakarta-jstl-api.version}</version>
+    </dependency>
+    <!--  DB  -->
+    <dependency>
+      <artifactId>mysql-connector-j</artifactId>
+      <groupId>com.mysql</groupId>
+      <version>${mysql-connector.version}</version>
+    </dependency>
+    <dependency>
+      <artifactId>HikariCP</artifactId>
+      <groupId>com.zaxxer</groupId>
+      <version>${hikaricp.version}</version>
+    </dependency>
+    <dependency>
+      <artifactId>spring-orm</artifactId>
+      <groupId>org.springframework</groupId>
+      <version>${spring-framework.version}</version>
+    </dependency>
+    <dependency>
+      <artifactId>mybatis</artifactId>
+      <groupId>org.mybatis</groupId>
+      <version>${mybatis.version}</version>
+    </dependency>
+    <dependency>
+      <artifactId>mybatis-spring</artifactId>
+      <groupId>org.mybatis</groupId>
+      <version>${mybatis-spring.version}</version>
+    </dependency>
+    <dependency>
+      <artifactId>lombok</artifactId>
+      <groupId>org.projectlombok</groupId>
+      <optional>true</optional>
+      <version>${lombok.version}</version>
+    </dependency>
+    <!--  json parsing & mapping   -->
+    <dependency>
+      <artifactId>jackson-databind</artifactId>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <version>${jackson.version}</version>
+    </dependency>
+    <dependency>
+      <artifactId>jackson-core</artifactId>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <version>${jackson.version}</version>
+    </dependency>
+    <dependency>
+      <artifactId>jackson-datatype-jsr310</artifactId>
+      <groupId>com.fasterxml.jackson.datatype</groupId>
+      <version>${jackson.version}</version>
+    </dependency>
+    <dependency>
+      <artifactId>hibernate-validator</artifactId>
+      <groupId>org.hibernate.validator</groupId>
+      <version>8.0.2.Final</version>
+    </dependency>
+    <!--  Test  -->
+    <dependency>
+      <artifactId>junit-jupiter-api</artifactId>
+      <groupId>org.junit.jupiter</groupId>
+      <scope>test</scope>
+      <version>${junit-jupiter.version}</version>
+    </dependency>
+    <dependency>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <groupId>org.junit.jupiter</groupId>
+      <scope>test</scope>
+      <version>${junit-jupiter.version}</version>
+    </dependency>
+    <dependency>
+      <artifactId>spring-test</artifactId>
+      <groupId>org.springframework</groupId>
+      <scope>test</scope>
+      <version>${spring-framework.version}</version>
+    </dependency>
+    <dependency>
+      <artifactId>assertj-core</artifactId>
+      <groupId>org.assertj</groupId>
+      <scope>test</scope>
+      <version>${assertj.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish</groupId>
+      <artifactId>jakarta.el</artifactId>
+      <version>4.0.2</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>5.17.0</version>
+      <scope>test</scope>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.mockito/mockito-junit-jupiter -->
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-junit-jupiter</artifactId>
+      <version>5.17.0</version>
+      <scope>test</scope>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-web -->
+      <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-web</artifactId>
+        <version>${spring-security.version}</version>
+      </dependency>
+      <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-config -->
+      <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-config</artifactId>
+        <version>${spring-security.version}</version>
+      </dependency>
+      <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-test -->
+      <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-test</artifactId>
+        <version>${spring-security.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-taglibs -->
+      <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-taglibs</artifactId>
+        <version>${spring-security.version}</version>
+      </dependency>
+  </dependencies>
+  <groupId>com.grepp</groupId>
+  <modelVersion>4.0.0</modelVersion>
+  <name>spring-mvc</name>
+  <packaging>war</packaging>
+  <properties>
+    <aspectj.version>1.9.22.1</aspectj.version>
+    <assertj.version>3.26.3</assertj.version>
+    <hibernate-validator.version>8.0.2.Final</hibernate-validator.version>
+    <!--   spring   -->
+    <spring-security.version>6.4.4</spring-security.version>
+
+
+    <hikaricp.version>5.1.0</hikaricp.version>
+    <jackson.version>2.15.3</jackson.version>
+    <!--   logging   -->
+    <jakarta-jstl-api.version>3.0.2</jakarta-jstl-api.version>
+    <jakarta-jstl.version>3.0.1</jakarta-jstl.version>
+    <!--   test   -->
+    <jakarta-servlet.version>6.0.0</jakarta-servlet.version>
+    <jakarta-validation.version>3.0.2</jakarta-validation.version>
+    <!--   lombok   -->
+    <junit-jupiter.version>5.11.4</junit-jupiter.version>
+    <!--   servlet   -->
+    <logback.version>1.5.16</logback.version>
+    <lombok.version>1.18.36</lombok.version>
+    <maven.compiler.source>21</maven.compiler.source>
+    <!--   validator   -->
+    <maven.compiler.target>21</maven.compiler.target>
+    <mybatis-spring.version>3.0.4</mybatis-spring.version>
+    <!--   jackson   -->
+    <mybatis.version>3.5.16</mybatis.version>
+    <!--   mybatis   -->
+    <mysql-connector.version>9.2.0</mysql-connector.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <!--   mysql connector   -->
+    <slf4j.version>2.0.16</slf4j.version>
+    <!--   database connection pool   -->
+    <spring-framework.version>6.2.3</spring-framework.version>
+  </properties>
+  <repositories>
+    <repository>
+      <id>spring-milestone</id>
+      <name>Spring Maven MILESTONE Repository</name>
+      <url>https://repo.spring.io/milestone</url>
+    </repository>
+  </repositories>
+  <version>1.0-SNAPSHOT</version>
+</project>

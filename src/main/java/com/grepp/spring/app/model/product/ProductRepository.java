@@ -15,4 +15,6 @@ public interface ProductRepository {
     void insert(Product product);
 
     void insertImage(ProductImg productImg);
+
+    boolean deleteById(Integer id);
 }

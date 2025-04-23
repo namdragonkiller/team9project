@@ -44,4 +44,10 @@ public class ProductService {
             throw new CommonException(ResponseCode.INTERNAL_SERVER_ERROR, e);
         }
     }
+
+    @Transactional
+    public boolean deleteById(Integer id) {
+
+        return productRepository.deleteById(id);
+    }
 }

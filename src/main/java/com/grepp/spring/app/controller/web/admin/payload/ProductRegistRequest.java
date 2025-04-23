@@ -1,4 +1,4 @@
-package com.grepp.spring.app.controller.web.product.payload;
+package com.grepp.spring.app.controller.web.admin.payload;
 
 import com.grepp.spring.app.model.product.dto.Product;
 import jakarta.validation.constraints.Min;

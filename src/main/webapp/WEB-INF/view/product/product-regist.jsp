@@ -94,9 +94,9 @@
         <div class="col-md-8 col-lg-6">
             <div class="card shadow-sm">
                 <div class="card-body p-4">
-                    <h5 class="mb-4"><b>상품 추가</b></h5>
+                    <h5 class="mb-4"><b>상품 등록</b></h5>
 
-                    <form:form action="${pageContext.request.contextPath}/product/regist" method="post"
+                    <form:form action="${pageContext.request.contextPath}/admin/product/regist" method="post"
                                enctype="multipart/form-data" modelAttribute="productRegistRequest">
 
                         <!-- 사진 업로드 -->

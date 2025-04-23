@@ -1,6 +1,6 @@
 package com.grepp.spring.app.controller.web.product;
 
-import com.grepp.spring.app.controller.web.product.payload.ProductRegistRequest;
+import com.grepp.spring.app.controller.web.admin.payload.ProductRegistRequest;
 import com.grepp.spring.app.model.product.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -31,24 +31,6 @@ public class productController {
 
         model.addAttribute("lists", result);
         return "product/product-list";
-    }
-
-    // 제품 등록 페이지
-    // 권한 설정 필요
-    @GetMapping("regist")
-    public String regist(ProductRegistRequest request, Model model) {
-        return "product/product-regist";
-    }
-
-    @PostMapping("regist")
-    public String regist(@Valid ProductRegistRequest request, BindingResult bindingResult, Model model) {
-
-        if (bindingResult.hasErrors()) {
-            return "product/product-regist";
-        }
-        productService.registProduct(request.getThumbnail(), request.toDto());
-
-        return "redirect:/";
     }
 
 }

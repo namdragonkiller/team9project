@@ -5,9 +5,11 @@
 <mapper namespace="com.grepp.spring.app.model.product.ProductRepository">
 
   <resultMap id="productMap" type="com.grepp.spring.app.model.product.dto.Product">
+    <id property="id" column="id"/>
+    <association property="image" column="id" javaType="ProductImg" select="selectImg" columnPrefix="product_"/>
   </resultMap>
 
-  <select id="selectAll" parameterType="com.grepp.spring.app.model.product.dto.Product">
+  <select id="selectAll" parameterType="com.grepp.spring.app.model.product.dto.Product" resultMap="productMap">
     <!-- join 해서 product image도 같이 가져오기-->
     select * from product;
   </select>
@@ -20,5 +22,13 @@
     insert into product_image(product_id, ORIGIN_FILE_NAME, RENAME_FILE_NAME, SAVE_PATH)
     values (#{productId}, #{originFileName}, #{renameFileName}, #{savePath})
   </insert>
+
+  <select id="selectImg" parameterType="int" resultType="com.grepp.spring.app.model.product.dto.ProductImg">
+    SELECT * FROM product_image WHERE product_id = #{product_id}
+  </select>
+
+  <delete id="deleteById" parameterType="int" >
+    delete from product where id = #{id}
+  </delete>
 
 </mapper>

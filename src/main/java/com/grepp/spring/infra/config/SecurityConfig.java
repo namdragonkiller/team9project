@@ -21,7 +21,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
 
-@Configuration
+//@Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {

@@ -12,4 +12,13 @@
     select * from product;
   </select>
 
+  <insert id="insert" parameterType="com.grepp.spring.app.model.product.dto.Product" useGeneratedKeys="true" keyProperty="id">
+    insert into product(name, price, amount, info) values (#{name}, #{price}, #{amount}, #{info})
+  </insert>
+
+  <insert id="insertImage" parameterType="com.grepp.spring.app.model.product.dto.ProductImg">
+    insert into product_image(product_id, ORIGIN_FILE_NAME, RENAME_FILE_NAME, SAVE_PATH)
+    values (#{productId}, #{originFileName}, #{renameFileName}, #{savePath})
+  </insert>
+
 </mapper>

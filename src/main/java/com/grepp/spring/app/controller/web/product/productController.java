@@ -36,13 +36,13 @@ public class productController {
         var result = productService.selectAll();
         log.info("result : {}", result);
 
-        // 이미지 경로에 사용할 URL 접두사
-        String uploadUrl = "/download/";
-
-        result.forEach(productDto -> {
-            String imageUrl = uploadUrl + productDto.getSavePath() + "/" + productDto.getRenameFileName();
-            productDto.setSavePath(imageUrl);
-        });
+//        // 이미지 경로에 사용할 URL 접두사
+//        String uploadUrl = "/download/";
+//
+//        result.forEach(productDto -> {
+//            String imageUrl = uploadUrl + productDto.getSavePath() + "/" + productDto.getRenameFileName();
+//            productDto.setSavePath(imageUrl);
+//        });
 
         model.addAttribute("lists", result);
         return "product/product-list";

@@ -2,7 +2,7 @@ package com.grepp.spring.app.controller.web.admin;
 
 import com.grepp.spring.app.controller.web.admin.payload.ProductRegistRequest;
 import com.grepp.spring.app.model.product.ProductService;
-import com.grepp.spring.app.model.product.dto.Product;
+import com.grepp.spring.app.model.product.dto.ProductDto;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -51,7 +51,7 @@ public class AdminController {
     @GetMapping("product/list")
     public String list(Model model) {
 
-        List<Product> result = productService.selectAll();
+        List<ProductDto> result = productService.selectAll();
 
         model.addAttribute("products", result);
         return "product/admin-product-list";

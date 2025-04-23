@@ -89,7 +89,7 @@
                     <li class="list-group-item d-flex mt-3">
                         <input type="hidden" name="id" value="${list.id}">
                         <div class="col-2"><img class="img-fluid"
-                                                src="${uploadUrl}${list.savePath}" alt="${list.originalFileName}"></div>
+                                                src="${list.image.url}" alt="${list.image.originFileName}"></div>
                         <div class="col">
                             <div class="row text-muted">커피콩</div>
                             <div class="row">${list.name}</div>

@@ -1,6 +1,9 @@
 package com.grepp.spring.app.model.product;
 
-import com.grepp.spring.app.model.product.dto.Product;
+import com.grepp.spring.app.model.product.dto.OrderListDto;
+import com.grepp.spring.app.model.product.dto.OrderListDto.ProductItemDTO;
+import com.grepp.spring.app.model.product.dto.OrderProductDto;
+import com.grepp.spring.app.model.product.dto.ProductDto;
 import com.grepp.spring.app.model.product.dto.ProductImg;
 import com.grepp.spring.infra.error.exceptions.CommonException;
 import com.grepp.spring.infra.response.ResponseCode;
@@ -23,12 +26,12 @@ public class ProductService {
     private final FileUtil fileUtil;
 
     @Transactional
-    public List<Product> selectAll() {
+    public List<ProductDto> selectAll() {
         return productRepository.selectAll();
     }
 
     @Transactional
-    public void registProduct(List<MultipartFile> thumbnail, Product dto) {
+    public void registProduct(List<MultipartFile> thumbnail, ProductDto dto) {
         try {
             List<FileDto> fileDtos = fileUtil.upload(thumbnail, "product");
             productRepository.insert(dto);
@@ -49,5 +52,30 @@ public class ProductService {
     public boolean deleteById(Integer id) {
 
         return productRepository.deleteById(id);
+    }
+}
+    // 비회원 구매
+    @Transactional
+    public void purchaseProduct(OrderListDto dto) {
+        for (ProductItemDTO item : dto.getItems()) {
+            OrderListDto nonMember = new OrderListDto();
+            OrderProductDto product = new OrderProductDto();
+
+            nonMember.setAddress(dto.getAddress());
+            nonMember.setEmail(dto.getEmail());
+            nonMember.setCreatedAt(dto.getCreatedAt());
+            nonMember.setAddressNumber(dto.getAddressNumber());
+            nonMember.setItems(List.of(item));
+            nonMember.setIsMember(false);
+
+            productRepository.insertPurchase(nonMember);
+
+
+            product.setOrderId(nonMember.getId()); // Set the valid order ID
+            product.setProductId(item.getId());
+            product.setAmount(item.getAmount());
+
+            productRepository.insertOrderProduct(product);
+        }
     }
 }

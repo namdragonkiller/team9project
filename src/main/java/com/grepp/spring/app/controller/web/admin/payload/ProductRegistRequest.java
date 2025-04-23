@@ -1,6 +1,6 @@
 package com.grepp.spring.app.controller.web.admin.payload;
 
-import com.grepp.spring.app.model.product.dto.Product;
+import com.grepp.spring.app.model.product.dto.ProductDto;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -23,8 +23,8 @@ public class ProductRegistRequest {
     @NotBlank
     private String info;
 
-    public Product toDto() {
-        Product product = new Product();
+    public ProductDto toDto() {
+        ProductDto product = new ProductDto();
         product.setName(name);
         product.setPrice(price);
         product.setAmount(amount);

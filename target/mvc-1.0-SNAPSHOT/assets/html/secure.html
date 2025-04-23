@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<!--
+  tag 기반 요청은 cors 정책의 대상이 아니다.
+  form, a, img, iframe 등등...
+-->
+
+<form action="http://localhost:8080/member/info">
+  <button>전송</button>
+</form>
+<script>
+  (async () => {
+    const response = await fetch('http://localhost:8080/member/info',{
+      method:"GET",
+      credentials:"include"
+    });
+
+    const info = await response.text();
+    // document.querySelector('body').outerHTML = info;
+    console.log(info);
+  })();
+</script>
+
+</body>
+</html>
+
+

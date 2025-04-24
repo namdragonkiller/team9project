@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
+@org.springframework.context.annotation.PropertySource("classpath:application.properties")
 public class DBConfig {
 
     @Value("${spring.datasource.url}")
@@ -34,11 +35,11 @@ public class DBConfig {
     @Value("${spring.datasource.hikari.maximum-pool-size}")
     private int poolSize;
 
-//    @Value("${schema.script.name:empty-schema.sql}")
-//    private String schema;
+    @Value("${schema.script.name:empty-schema.sql}")
+    private String schema;
 
-//    @Value("${data.script.name:empty-data.sql}")
-//    private String data;
+    @Value("${data.script.name:empty-data.sql}")
+    private String data;
 
     @Bean
     public DataSource dataSource() {
@@ -72,7 +73,7 @@ public class DBConfig {
 //        populator.setContinueOnError(false);
 //        return populator;
 //    }
-
+//
 //    @Bean
 //    public DataSourceInitializer databasePopulatorInitializer(
 //        DataSource dataSource, ResourceDatabasePopulator databasePopulator) {

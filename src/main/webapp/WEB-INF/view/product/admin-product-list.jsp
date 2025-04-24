@@ -96,11 +96,12 @@
                         <div class="col">${product.price}원</div>
                         <div class="col">${product.amount}개</div>
                         <div class="col action">
-                            <button class="btn btn-small btn-outline-dark">수정</button>
+                            <button class="btn btn-small btn-outline-dark"
+                            onclick="window.location.href = '/admin/product/${product.id}'">수정</button>
                         </div>
                         <div class="col action">
                             <button class="btn btn-small btn-outline-dark"
-                                    onclick="deleteProduct(${product.id})">제거
+                                    onclick="deleteProduct(${product.id}, '${product.image.path}')">삭제
                             </button>
                         </div>
                     </li>
@@ -116,11 +117,15 @@
 </c:if>
 
 <script>
-  function deleteProduct(productId) {
+  function deleteProduct(productId, imagePath) {
     if (!confirm("정말 삭제하시겠습니까?")) return;
 
     fetch(`/admin/product/` + productId, {
       method: 'DELETE',
+      headers: {
+        'Content-Type': 'text/plain'
+      },
+      body: imagePath,
       redirect: 'follow'
     }).then(response => {
       if (response.ok) {

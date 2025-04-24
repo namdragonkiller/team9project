@@ -28,4 +28,8 @@ public class ProductImg {
         return "/download/" + savePath + renameFileName;
     }
 
+    public String getPath() {
+        return savePath + renameFileName;
+    }
+
 }

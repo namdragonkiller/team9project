@@ -10,6 +10,7 @@ import com.grepp.spring.infra.response.ResponseCode;
 import com.grepp.spring.infra.util.file.FileDto;
 import com.grepp.spring.infra.util.file.FileUtil;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -49,9 +50,14 @@ public class ProductService {
     }
 
     @Transactional
-    public boolean deleteById(Integer id) {
-
-        return productRepository.deleteById(id);
+    public boolean deleteById(Integer id, String path) {
+        try {
+            boolean result = productRepository.deleteById(id);
+            fileUtil.delete(path);
+            return result;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     // 비회원 구매
@@ -77,5 +83,30 @@ public class ProductService {
 
             productRepository.insertOrderProduct(product);
         }
+    }
+
+    public ProductDto selectById(Integer id) {
+        return productRepository.selectById(id);
+    }
+
+    @Transactional
+    public void updateById(Integer id, String oldPath, List<MultipartFile> newImage, ProductDto dto) {
+        try {
+            productRepository.updateProductById(id, dto);
+
+            // 기존 이미지에서 변경이 있다면
+            if (!oldPath.isBlank()){
+                List<FileDto> fileDtos = fileUtil.upload(newImage, "product");
+                if (fileDtos.isEmpty()) {
+                    return;
+                }
+                ProductImg productImg = new ProductImg(id, fileDtos.getFirst());
+                productRepository.updateImageById(productImg);
+                fileUtil.delete(oldPath);
+            }
+        } catch (IOException e) {
+            throw new CommonException(ResponseCode.INTERNAL_SERVER_ERROR, e);
+        }
+
     }
 }

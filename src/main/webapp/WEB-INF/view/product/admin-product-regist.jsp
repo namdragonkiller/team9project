@@ -102,7 +102,7 @@
                         <!-- 사진 업로드 -->
                         <div class="mb-3">
                             <label for="thumbnail" class="form-label">사진 업로드</label>
-                            <input type="file" class="form-control" id="thumbnail" name="thumbnail">
+                            <input type="file" class="form-control" id="thumbnail" name="thumbnail" accept="image/*">
                         </div>
 
                         <!-- 이름 -->

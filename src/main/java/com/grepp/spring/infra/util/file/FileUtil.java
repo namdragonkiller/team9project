@@ -2,6 +2,8 @@ package com.grepp.spring.infra.util.file;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +58,14 @@ public class FileUtil {
             now.getYear() + "/" +
             now.getMonth() + "/" +
             now.getDayOfMonth() + "/";
+    }
+
+    public void delete(String oldPath) throws IOException {
+        Path path = Path.of(filePath + oldPath);
+        if (Files.exists(path)) {
+            Files.delete(path);
+        }
+
     }
 
 }

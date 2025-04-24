@@ -6,6 +6,7 @@ import com.grepp.spring.app.model.product.dto.ProductDto;
 import com.grepp.spring.app.model.product.dto.ProductImg;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 @Mapper
@@ -23,4 +24,10 @@ public interface ProductRepository {
     void insertPurchase(OrderListDto nonMember);
 
     void insertOrderProduct(OrderProductDto product);
+
+    ProductDto selectById(Integer id);
+
+    void updateProductById(@Param("id") Integer id, @Param("dto") ProductDto dto);
+
+    void updateImageById(ProductImg productImg);
 }

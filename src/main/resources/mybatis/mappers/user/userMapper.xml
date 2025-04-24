@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grepp.spring.app.model.user.UserRepository">
+
+<!--  <select id="selectById" resultType="User">-->
+<!--    select * from member where id = #{id}-->
+<!--  </select>-->
+
+  <resultMap id="userMap" type="User">
+    <id property="id" column="id"/>
+    <result property="password" column="password"/>
+    <result property="email" column="email"/>
+    <result property="tel" column="tel"/>
+    <result property="address" column="address"/>
+    <result property="addressNumber" column="address_number"/>
+    <result property="role" column="role"/>
+  </resultMap>
+
+  <select id="selectById" resultMap="userMap">
+    select * from users where id = #{id}
+  </select>
+
+</mapper>

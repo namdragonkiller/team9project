@@ -1,10 +1,9 @@
 <%@ page language="java" %>
 <header class="header">
-    <nav class="navbar brown">
+    <nav class="navbar white">
         <div class="nav-wrapper ">
-            <a href="/" class="brand-logo white-text" style="position: absolute; left: 50%; transform: translateX(-50%);"
-            >Grids & Circles</a>
-            <ul id="nav-mobile" class="hide-on-med-and-down" style="display: flex; justify-content: center;">
+            <a href="/" class="brand-logo center grey-text">Grepp</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down grey-text">
                 <sec:authorize access="isAnonymous()">
                     <li><a href="/member/signin" class="grey-text">sign in</a></li>
                     <li><a href="/member/signup" class="grey-text">sign up</a></li>

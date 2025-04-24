@@ -13,21 +13,31 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
+import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
-//@Configuration
+@Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
     @Value("${remember-me.key}")
     private String rememberMeKey;
+
+//    @Bean
+//    public HandlerMappingIntrospector mvcHandlerMappingIntrospector() {
+//        return new HandlerMappingIntrospector();
+//    }
 
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
@@ -64,23 +74,22 @@ public class SecurityConfig {
         // * : 1 depth 아래 모든 경로
         // ** : 모든 depth 의 모든 경로
         // // Security Config 에는 인증과 관련된 설정만 지정 (PermitAll or Authenticated)
-        http
-            .authorizeHttpRequests((requests) -> requests
+
+        http.authorizeHttpRequests((requests) -> requests
                 .requestMatchers(GET, "/", "/assets/**", "/download/**").permitAll()
-                .requestMatchers(GET, "/book/list").permitAll()
-                .requestMatchers(GET, "/api/book/list").permitAll()
-                .requestMatchers(GET, "/api/member/exists/*").permitAll()
-                .requestMatchers(GET, "/member/signup").permitAll()
-                .requestMatchers(GET, "/member/signin").permitAll()
-                .requestMatchers(POST, "/member/signin", "/member/signup").permitAll()
+                .requestMatchers(GET, "/api/user/exists/*").permitAll()
+                .requestMatchers(GET, "/user/signup").permitAll()
+                .requestMatchers(GET, "/user/signin").permitAll()
+                .requestMatchers(GET, "/admin/product/list").permitAll()
+                .requestMatchers(POST, "/user/signin", "/user/signup").permitAll()
                 .anyRequest().authenticated()
             )
             .formLogin((form) -> form
-                .loginPage("/member/signin")
-                .usernameParameter("userId")
-                .loginProcessingUrl("/member/signin")
-                .defaultSuccessUrl("/")
-                .successHandler(successHandler())
+                .loginPage("/user/signin")
+                .loginProcessingUrl("/user/signin")
+                .usernameParameter("id")
+                .passwordParameter("password")
+                .defaultSuccessUrl("/product/list", true)
                 .permitAll()
             )
             .rememberMe(rememberMe -> rememberMe.key(rememberMeKey))

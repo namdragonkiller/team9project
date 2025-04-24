@@ -25,6 +25,18 @@
     <filter-name>EncodingFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+<!--  gpt-->
+  <filter>
+    <filter-name>springSecurityFilterChain</filter-name>
+    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>springSecurityFilterChain</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+<!--    gpt     필터체인등록 하니 405에러 해결(원인은 디스패쳐서블릿이 post를 잡고있어서
+security 가 할일을)-->
 
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>

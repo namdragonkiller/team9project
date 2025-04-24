@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:mvc="http://www.springframework.org/schema/mvc"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.springframework.org/schema/beans"
+  xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+  http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd">
+
+  <!-- * : 하위 1뎁스의 모든 경로
+      ** : 모든 하위 뎁스의 모든 경로
+    -->
+  <bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactory">
+    <property name="dataSource" ref="dataSource"/>
+    <!--
+      classpath  : 현재 프로젝트의 resource 만 탐색
+      classpath* : 현재 프로젝트에 참조된 모든 jar 까지 함께 검색
+      -->
+    <property name="mapperLocations" value="classpath*:mybatis/mappers/**/*.xml" />
+    <!--
+      com.grepp.spring.app.model 패키지 하위의
+      모든 클래스의 full name 을 클래스 이름으로 별칭 등록
+      -->
+    <property name="typeAliasesPackage" value="com.grepp.spring.app.model" />
+    <property name="configuration">
+      <bean class="org.apache.ibatis.session.Configuration">
+        <property name="mapUnderscoreToCamelCase" value="true"/>
+      </bean>
+    </property>
+  </bean>
+
+  <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+    <constructor-arg index="0" ref="sqlSessionFactory" />
+  </bean>
+
+
+  <mybatis:scan base-package="com.grepp.spring.app.model" annotation="org.apache.ibatis.annotations.Mapper"/>
+  <context:component-scan base-package="com.grepp.spring"/>
+
+  <!--  <mvc:resources location="/assets" mapping="/assets/**"/>-->
+
+</beans>

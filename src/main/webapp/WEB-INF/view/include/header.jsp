@@ -1,12 +1,11 @@
 <%@ page language="java" %>
 <header class="header">
-    <nav class="navbar white">
+    <nav class="navbar brown">
         <div class="nav-wrapper ">
-            <a href="/" class="brand-logo center grey-text">Grepp</a>
+            <a href="/" class="brand-logo center grey-text">Grids & Circles</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down grey-text">
                 <sec:authorize access="isAnonymous()">
-                    <li><a href="/member/signin" class="grey-text">sign in</a></li>
-                    <li><a href="/member/signup" class="grey-text">sign up</a></li>
+
                     <li>
                         <a href="mobile.html">
                             <i class="material-icons grey-text sidenav-trigger"

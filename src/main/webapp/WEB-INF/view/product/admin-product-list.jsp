@@ -1,10 +1,13 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <sec:csrfMetaTags/>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
@@ -117,13 +120,17 @@
 </c:if>
 
 <script>
+  const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+  const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+
   function deleteProduct(productId, imagePath) {
     if (!confirm("정말 삭제하시겠습니까?")) return;
 
     fetch(`/admin/product/` + productId, {
       method: 'DELETE',
       headers: {
-        'Content-Type': 'text/plain'
+        'Content-Type': 'text/plain',
+        [csrfHeader]: csrfToken
       },
       body: imagePath,
       redirect: 'follow'

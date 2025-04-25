@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Slf4j
 @RequestMapping("admin")
 @RequiredArgsConstructor
-//@PreAuthorize("hasRole('ADMIN')")
+@PreAuthorize("hasRole('ADMIN')")
 public class AdminController {
 
     private final ProductService productService;

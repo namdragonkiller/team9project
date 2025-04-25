@@ -95,7 +95,6 @@ document.addEventListener('DOMContentLoaded', function() {
       formData.append(`items[${index}].price`, item.price);
     });
 
-    // Ajax 요청 보내기 (fetch API 사용)
     fetch('/product/purchase', {
       method: 'POST',
       headers: {

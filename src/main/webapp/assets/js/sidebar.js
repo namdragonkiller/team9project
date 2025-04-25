@@ -13,14 +13,15 @@ document.addEventListener("click", function (e) {
     const name = card.querySelector(".card-title").textContent;
     const priceText = card.querySelector(".price p").textContent;
     const price = parseInt(priceText.replace(/[^0-9]/g, ""), 10);
+    const id = card.querySelector('input[name="id"]').value;
 
     if (cartMap.has(name)) {
         const item = cartMap.get(name);
-        item.count += 1;
+        item.amount += 1;
         item.totalPrice += price;
-        item.element.textContent = `${name} (${item.count}개) - ${item.totalPrice.toLocaleString()}원`;
+        item.element.textContent = `${name} (${item.amount}개) - ${item.totalPrice.toLocaleString()}원`;
 
-        item.inputCount.value = item.count;
+        item.inputAmount.value = item.amount;
         item.inputPrice.value = item.totalPrice;
     } else {
         const li = document.createElement("li");
@@ -28,15 +29,21 @@ document.addEventListener("click", function (e) {
         li.textContent = `${name} (1개) - ${price.toLocaleString()}원`;
         cartItems.appendChild(li);
 
+        const inputId = document.createElement("input");
+        inputId.type = "hidden";
+        inputId.name = `items[${itemIndex}].id`;
+        inputId.value = id;
+        cartFormInputs.appendChild(inputId);
+
         const inputName = document.createElement("input");
         inputName.type = "hidden";
         inputName.name = `items[${itemIndex}].name`;
         inputName.value = name;
 
-        const inputCount = document.createElement("input");
-        inputCount.type = "hidden";
-        inputCount.name = `items[${itemIndex}].count`;
-        inputCount.value = 1;
+        const inputAmount = document.createElement("input");
+        inputAmount.type = "hidden";
+        inputAmount.name = `items[${itemIndex}].amount`;
+        inputAmount.value = 1;
 
         const inputPrice = document.createElement("input");
         inputPrice.type = "hidden";
@@ -44,14 +51,14 @@ document.addEventListener("click", function (e) {
         inputPrice.value = price;
 
         cartFormInputs.appendChild(inputName);
-        cartFormInputs.appendChild(inputCount);
+        cartFormInputs.appendChild(inputAmount);
         cartFormInputs.appendChild(inputPrice);
 
         cartMap.set(name, {
-            count: 1,
+            amount: 1,
             totalPrice: price,
             element: li,
-            inputCount: inputCount,
+            inputAmount: inputAmount,
             inputPrice: inputPrice
         });
 

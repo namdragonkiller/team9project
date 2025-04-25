@@ -7,6 +7,18 @@
     <title>상품 목록</title>
     <%@include file="/WEB-INF/view/include/static.jsp" %>
     <style>
+        body {
+            display: flex;
+            min-height: 100vh;
+            margin: 0;
+        }
+        main.container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
         .cart-sidebar {
             position: fixed;
             top: 50%;
@@ -65,6 +77,7 @@
                             <i class="material-icons">add_shopping_cart</i>
                         </a>
                     </div>
+                    <input type="hidden" name="id" value="${product.id}">
                     <div class="card-content">
                         <span class="card-title name"><c:out value="${product.name}"/></span>
                         <p class="info blue-grey-text"><c:out value="${product.info}"/></p>
@@ -88,6 +101,7 @@
                     <i class="material-icons">add_shopping_cart</i>
                 </a>
             </div>
+            <input type="hidden" name="id" value="${product.id}">
             <div class="card-content">
                 <span class="card-title name"></span>
                 <p class="info blue-grey-text"></p>

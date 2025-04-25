@@ -77,7 +77,7 @@ public class ProductService {
             productRepository.insertPurchase(nonMember);
 
 
-            product.setOrderId(nonMember.getId()); // Set the valid order ID
+            product.setOrderId(nonMember.getId());
             product.setProductId(item.getId());
             product.setAmount(item.getAmount());
 
@@ -94,7 +94,7 @@ public class ProductService {
         try {
             productRepository.updateProductById(id, dto);
 
-            // 기존 이미지에서 변경이 있다면
+
             if (!oldPath.isBlank()){
                 List<FileDto> fileDtos = fileUtil.upload(newImage, "product");
                 if (fileDtos.isEmpty()) {

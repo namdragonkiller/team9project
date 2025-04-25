@@ -44,4 +44,19 @@
     delete from product where id = #{id}
   </delete>
 
+  <select id="selectById" parameterType="com.grepp.spring.app.model.product.dto.ProductDto" resultMap="productMap">
+    select * from product where id = #{id}
+  </select>
+
+  <update id="updateProductById" >
+    update product
+    set name=#{dto.name}, price=#{dto.price}, amount=#{dto.amount}, info=#{dto.info}
+    where id = #{id}
+  </update>
+
+  <update id="updateImageById" parameterType="com.grepp.spring.app.model.product.dto.ProductImg">
+    update product_image
+    set ORIGIN_FILE_NAME=#{originFileName}, RENAME_FILE_NAME=#{renameFileName}, SAVE_PATH=#{savePath}
+    where product_id = #{productId}
+  </update>
 </mapper>

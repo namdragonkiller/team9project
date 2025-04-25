@@ -1,7 +1,9 @@
 const cartMap = new Map();
 const cartItems = document.getElementById("cartItems");
-const cartCountSpan = document.getElementById("cartCount");
 const cartFormInputs = document.getElementById("cartFormInputs");
+const cartCountSpan = document.getElementById("cartCount");
+
+let itemIndex = 0;
 
 document.addEventListener("click", function (e) {
     const target = e.target.closest(".add-cart");
@@ -16,7 +18,6 @@ document.addEventListener("click", function (e) {
         const item = cartMap.get(name);
         item.count += 1;
         item.totalPrice += price;
-
         item.element.textContent = `${name} (${item.count}개) - ${item.totalPrice.toLocaleString()}원`;
 
         item.inputCount.value = item.count;
@@ -29,17 +30,17 @@ document.addEventListener("click", function (e) {
 
         const inputName = document.createElement("input");
         inputName.type = "hidden";
-        inputName.name = "items[][name]";
+        inputName.name = `items[${itemIndex}].name`;
         inputName.value = name;
 
         const inputCount = document.createElement("input");
         inputCount.type = "hidden";
-        inputCount.name = "items[][count]";
+        inputCount.name = `items[${itemIndex}].count`;
         inputCount.value = 1;
 
         const inputPrice = document.createElement("input");
         inputPrice.type = "hidden";
-        inputPrice.name = "items[][totalPrice]";
+        inputPrice.name = `items[${itemIndex}].price`;
         inputPrice.value = price;
 
         cartFormInputs.appendChild(inputName);
@@ -53,6 +54,8 @@ document.addEventListener("click", function (e) {
             inputCount: inputCount,
             inputPrice: inputPrice
         });
+
+        itemIndex++;
     }
 
     cartCountSpan.textContent = +cartCountSpan.textContent + 1;

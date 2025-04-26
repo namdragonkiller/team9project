@@ -4,7 +4,8 @@ import com.grepp.spring.app.model.user.dto.User;
 import com.grepp.spring.app.model.userdetails.role.Role;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,19 +13,18 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(locations={
+@ContextConfiguration(locations = {
     "file:src/main/webapp/WEB-INF/spring/root-context.xml",
     "file:src/main/webapp/WEB-INF/spring/servlet-context.xml"
 })
 @Slf4j
-
 class UserRepositoryTest {
 
     @Autowired
     private UserRepository userRepository;
 
     @Test
-    public void selectById(){
+    public void selectById() {
         log.info("{}", userRepository.selectById("test01"));
     }
 
@@ -40,9 +40,7 @@ class UserRepositoryTest {
         user.setAddressNumber("06234");
         user.setRole(Role.ROLE_USER);
 
-
         userRepository.insert(user);
-
 
         Optional<User> result = userRepository.selectById("insertTest01");
 
@@ -50,5 +48,9 @@ class UserRepositoryTest {
         assertEquals("test@sample.com", result.get().getEmail());
         log.info("삽입된 사용자: {}", result.get());
     }
+
+
 }
+
+
 

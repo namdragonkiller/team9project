@@ -70,6 +70,7 @@ public class SecurityConfig {
                 .requestMatchers(GET, "/product/list", "/product/cart").permitAll()
                 .requestMatchers(POST, "/product/goCart", "/product/purchase").permitAll()
                 .requestMatchers(POST, "/user/signin", "/user/signup").permitAll()
+                .requestMatchers(POST, "/user/signup","/user/signin","/user/promote").permitAll()
                 .anyRequest().authenticated()
             )
             .formLogin((form) -> form

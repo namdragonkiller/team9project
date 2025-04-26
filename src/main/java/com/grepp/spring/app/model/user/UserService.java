@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +22,9 @@ public class UserService {
 
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
+
+    @Value("${admin-password.key}")
+    private String adminPasswordKey;
 
     @Transactional
     public void signup(User dto, Role role) {
@@ -55,6 +60,17 @@ public class UserService {
 
     public Boolean isDuplicatedId(String id){
         return userRepository.existUser(id);
+    }
+
+    @Transactional
+    public void promoteSelf(String adminPassword) {
+        if (!adminPasswordKey.equals(adminPassword)) {
+            throw new IllegalArgumentException("비밀번호가 틀렸습니다.");
+        }
+
+        String currentUserId = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        userRepository.promoteRole(currentUserId);
     }
 
 

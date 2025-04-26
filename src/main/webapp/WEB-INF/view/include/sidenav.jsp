@@ -7,6 +7,7 @@
 </sec:authorize>
   <sec:authorize access="isAuthenticated()">
       <li><a class="waves-effect" href="/"><i class="material-icons">home</i>myPage</a></li>
+      <li><a class="waves-effect" href="/user/promote"><i class="material-icons">admin_panel_settings</i>Grant Admin</a></li>
       <li><a href="#" id="logout" class="grey-text">LogOut</a></li>
   </sec:authorize>
 </ul>

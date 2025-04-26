@@ -1,5 +1,6 @@
 package com.grepp.spring.app.controller.web.user;
 
+import com.grepp.spring.app.controller.web.user.form.PromoteForm;
 import com.grepp.spring.app.controller.web.user.form.SigninForm;
 import com.grepp.spring.app.controller.web.user.form.SignupForm;
 import com.grepp.spring.app.model.user.UserService;
@@ -23,7 +24,7 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("signup")
-    public String signup(SignupForm form){
+    public String signup(SignupForm form) {
         return "user/signup";
     }
 
@@ -31,21 +32,43 @@ public class UserController {
     public String signup(
         @Valid SignupForm form,
         BindingResult bindingResult,
-        Model model){
-        if (bindingResult.hasErrors()){
+        Model model) {
+        if (bindingResult.hasErrors()) {
             return "user/signup";
         }
 
-    userService.signup(form.toDto(), Role.ROLE_USER);
+        userService.signup(form.toDto(), Role.ROLE_USER);
         return "redirect:/user/signin";
     }
 
     @GetMapping("signin")
-    public String signin(SigninForm form){
+    public String signin(SigninForm form) {
         return "user/signin";
     }
 
+    @GetMapping("promote")
+    public String promote(PromoteForm form) {
+        return "user/promote";
+    }
 
+    @PostMapping("promote")
+    public String promote(
+        @Valid PromoteForm form,
+        BindingResult bindingResult,
+        Model model) {
 
+        if (bindingResult.hasErrors()) {
+            return "user/promote";
+        }
 
+        try {
+            userService.promoteSelf(form.getAdminPassword());
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "비밀번호를 확인하세요.");
+            return "user/promote";
+        }
+
+        return "redirect:/user/signin";
+
+    }
 }

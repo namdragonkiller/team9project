@@ -39,7 +39,7 @@
             </p>
         </div>
         <button class="btn brown waves-effect waves-light offset-s1" type="submit" name="action">
-            Submit
+            로그인
             <i class="material-icons right">send</i>
         </button>
     </form:form>

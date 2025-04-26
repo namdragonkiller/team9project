@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
@@ -23,5 +24,7 @@ public interface UserRepository {
         + "values (#{id},#{password},#{email},#{tel},#{address},#{addressNumber},#{role})")
     void insert(User dto);
 
+    @Update("update users set role = ('ROLE_ADMIN') where (id=#{id})")
+    void promoteRole(String id);
 
 }

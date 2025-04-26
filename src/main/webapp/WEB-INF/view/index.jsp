@@ -50,6 +50,23 @@
         .product-list {
             margin-left: 280px;
         }
+        .sold-out-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            z-index: 10;
+            pointer-events: none;
+        }
+        a.add-cart[style*="pointer-events: none"] {
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
@@ -71,9 +88,19 @@
         <c:forEach items="${products}" var="product">
             <div class="col s12 m6 no-padding" style="max-width: 400px;">
                 <div class="card hoverable rounded-card z-depth-2" style="margin: 5px;">
-                    <div class="card-image">
-                        <img src="${product.image.url}" style="height: 400px;" class="thumbnail">
-                        <a class="btn-floating halfway-fab waves-effect black add-cart">
+                    <div class="card-image" style="position: relative;">
+                        <img src="${product.image.url}"
+                             style="height: 400px; filter: ${product.amount == 0 ? 'brightness(50%)' : 'none'};"
+                             class="thumbnail">
+
+                        <c:if test="${product.amount == 0}">
+                            <div class="sold-out-overlay">
+                                SOLD OUT
+                            </div>
+                        </c:if>
+
+                        <a class="btn-floating halfway-fab waves-effect black add-cart"
+                           style="${product.amount == 0 ? 'pointer-events: none; opacity: 0.5;' : ''}">
                             <i class="material-icons">add_shopping_cart</i>
                         </a>
                     </div>

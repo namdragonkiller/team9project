@@ -30,4 +30,6 @@ public interface ProductRepository {
     void updateProductById(@Param("id") Integer id, @Param("dto") ProductDto dto);
 
     void updateImageById(ProductImg productImg);
+
+    void updateProductAmountById(Integer id, Integer amount);
 }

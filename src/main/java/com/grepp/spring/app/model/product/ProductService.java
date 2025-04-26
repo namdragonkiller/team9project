@@ -60,8 +60,6 @@ public class ProductService {
         }
     }
 
-    // 비회원 구매
-
 
     @Transactional
     public void purchaseProduct(OrderListDto dto) {
@@ -86,6 +84,11 @@ public class ProductService {
             product.setAmount(item.getAmount());
 
             productRepository.insertOrderProduct(product);
+
+            // product table에 수량 update
+            int amount = item.getAmount();
+            productRepository.updateProductAmountById(item.getId(), amount);
+
         }
     }
 

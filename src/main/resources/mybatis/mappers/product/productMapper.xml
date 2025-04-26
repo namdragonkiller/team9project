@@ -48,6 +48,12 @@
     select * from product where id = #{id}
   </select>
 
+  <update id="updateProductAmountById" >
+    update product
+    SET amount = amount - #{amount}
+    where id = #{id}
+  </update>
+
   <update id="updateProductById" >
     update product
     set name=#{dto.name}, price=#{dto.price}, amount=#{dto.amount}, info=#{dto.info}

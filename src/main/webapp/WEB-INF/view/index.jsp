@@ -59,7 +59,7 @@
 <div class="cart-sidebar" id="cartSidebar">
     <h6>🛒 장바구니 (<span id="cartCount">0</span>)</h6>
     <ul id="cartItems" class="collection"></ul>
-    <form id="cartForm" action="/test/list" method="POST">
+    <form id="cartForm" action="/product/goCart" method="POST">
         <sec:csrfInput/>
         <div id="cartFormInputs"></div>
         <button type="submit" class="btn btn-small green" style="margin-top: 10px;">구매하기</button>

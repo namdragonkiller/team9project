@@ -1,0 +1,77 @@
+body {
+  background: #ddd;
+}
+
+.card {
+  margin: auto;
+  max-width: 950px;
+  width: 90%;
+  box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 1rem;
+  border: transparent
+}
+
+.summary {
+  background-color: #ddd;
+  border-top-right-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+  padding: 4vh;
+  color: rgb(65, 65, 65)
+}
+
+@media (max-width: 767px) {
+  .summary {
+    border-top-right-radius: unset;
+    border-bottom-left-radius: 1rem
+  }
+}
+
+.row {
+  margin: 0
+}
+
+.title b {
+  font-size: 1.5rem
+}
+
+.col-2,
+.col {
+  padding: 0 1vh
+}
+
+img {
+  width: 3.5rem
+}
+
+hr {
+  margin-top: 1.25rem
+}
+
+.products {
+  width: 100%;
+}
+
+.products .price, .products .action {
+  line-height: 38px;
+}
+
+.products .action {
+  line-height: 38px;
+}
+
+/* 페이징 */
+
+.page-item.active .page-link {
+  background-color: rgb(65, 65, 65) !important;
+  border-color: rgb(65, 65, 65) !important;
+  color: white !important;
+}
+
+a.page-link {
+  color: rgb(65, 65, 65) !important;
+}
+
+.page-nav {
+  align-self: center;
+}
+

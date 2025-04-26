@@ -25,8 +25,8 @@
 
   <insert id="insertPurchase" parameterType="com.grepp.spring.app.model.product.dto.OrderListDto" useGeneratedKeys="true" keyProperty="id">
     INSERT INTO coffee.order_list
-    (email, address, address_number, amount, price, createdAt, is_member)
-    VALUES(#{email}, #{address}, #{addressNumber}, #{item.amount}, #{item.price}, CURRENT_TIMESTAMP, #{isMember});
+    (email, address, address_number, amount, price, createdAt, is_member, user_id)
+    VALUES(#{email}, #{address}, #{addressNumber}, #{item.amount}, #{item.price}, CURRENT_TIMESTAMP, #{isMember}, #{userId});
   </insert>
 
   <insert id="insertOrderProduct"

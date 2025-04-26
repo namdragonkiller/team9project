@@ -1,30 +1,26 @@
 package com.grepp.spring.app.model.product.dto;
 
+import com.grepp.spring.app.model.product.dto.OrderListDto.ProductItemDTO;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Data;
 
 @Data
-public class OrderListDto {
+public class ProductCartDto {
 
-    private Long id;
     private String email;
     private String address;
     private String addressNumber;
-    private LocalDateTime createdAt;
-    private List<ProductItemDTO> items;
-    private Boolean isMember;
     private String userId;
+    private List<ProductItemDTO> items;
+
 
     @Data
     public static class ProductItemDTO {
-
         private Integer id; // product_id
         private Integer price;
         private Integer amount;
-    }
-
-    public ProductItemDTO getItem() {
-        return items != null && !items.isEmpty() ? items.get(0) : null;
+        private String name;
+        private String imageUrl;
     }
 }

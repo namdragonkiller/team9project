@@ -14,6 +14,7 @@ document.addEventListener("click", function (e) {
     const priceText = card.querySelector(".price p").textContent;
     const price = parseInt(priceText.replace(/[^0-9]/g, ""), 10);
     const id = card.querySelector('input[name="id"]').value;
+    const imageUrl = card.querySelector(".card-image img").src;
 
     if (cartMap.has(name)) {
         const item = cartMap.get(name);
@@ -50,16 +51,23 @@ document.addEventListener("click", function (e) {
         inputPrice.name = `items[${itemIndex}].price`;
         inputPrice.value = price;
 
+        const inputImageUrl = document.createElement("input");
+        inputImageUrl.type = "hidden";
+        inputImageUrl.name = `items[${itemIndex}].imageUrl`;
+        inputImageUrl.value = imageUrl;
+
         cartFormInputs.appendChild(inputName);
         cartFormInputs.appendChild(inputAmount);
         cartFormInputs.appendChild(inputPrice);
+        cartFormInputs.appendChild(inputImageUrl);
 
         cartMap.set(name, {
             amount: 1,
             totalPrice: price,
             element: li,
             inputAmount: inputAmount,
-            inputPrice: inputPrice
+            inputPrice: inputPrice,
+            inputImageUrl: inputImageUrl
         });
 
         itemIndex++;

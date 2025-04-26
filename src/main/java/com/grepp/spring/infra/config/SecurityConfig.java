@@ -67,6 +67,8 @@ public class SecurityConfig {
                 .requestMatchers(GET, "/api/user/exists/*").permitAll()
                 .requestMatchers(GET, "/user/signup").permitAll()
                 .requestMatchers(GET, "/user/signin").permitAll()
+                .requestMatchers(GET, "/product/list", "/product/cart").permitAll()
+                .requestMatchers(POST, "/product/goCart", "/product/purchase").permitAll()
                 .requestMatchers(POST, "/user/signin", "/user/signup").permitAll()
                 .anyRequest().authenticated()
             )

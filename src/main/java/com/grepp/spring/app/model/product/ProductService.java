@@ -61,6 +61,8 @@ public class ProductService {
     }
 
     // 비회원 구매
+
+
     @Transactional
     public void purchaseProduct(OrderListDto dto) {
         for (ProductItemDTO item : dto.getItems()) {
@@ -72,7 +74,9 @@ public class ProductService {
             nonMember.setCreatedAt(dto.getCreatedAt());
             nonMember.setAddressNumber(dto.getAddressNumber());
             nonMember.setItems(List.of(item));
-            nonMember.setIsMember(false);
+            nonMember.setUserId(dto.getUserId());
+
+            nonMember.setIsMember(dto.getUserId() != null);
 
             productRepository.insertPurchase(nonMember);
 

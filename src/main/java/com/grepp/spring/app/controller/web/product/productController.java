@@ -18,6 +18,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -134,16 +135,16 @@ public class productController {
     // 구매하기
     @PostMapping("/purchase")
     public ResponseEntity<Map<String, Object>> purchaseProducts(Authentication authentication,@ModelAttribute @Valid OrderListForm form) {
+
         String userId = null;
         if(authentication != null) {
             userId = authentication.getName();
         }
+        int message =  productService.purchaseProduct(form.toDto(userId));
 
-        productService.purchaseProduct(form.toDto(userId));
-
-        // 나중에 페이지 이동 처리
         Map<String, Object> response = new HashMap<>();
         response.put("success", true);
+        response.put("msg", message);
         return ResponseEntity.ok(response);
     }
 

@@ -54,7 +54,7 @@
                     </li>
                 </c:forEach>
             </ul>
-            <c:if test="${totalPages >= 1}">
+            <c:if test="${totalPages > 1}">
                 <nav class="mt-4 page-nav">
                     <ul class="pagination justify-content-center">
                         <!-- 이전 버튼 -->
@@ -100,26 +100,32 @@
                             <label for="address" class="form-label">주소</label>
                             <input type="text" class="form-control mb-1" id="address" name="address"
                                    value="${userInfo.address}">
+                            <p class="red address">주소는 필수 입력입니다.</p>
+
                         </div>
                         <div class="mb-3">
                             <label for="addressNumber" class="form-label">우편번호</label>
                             <input type="text" class="form-control" id="addressNumber"
                                    name="addressNumber" value="${userInfo.addressNumber}">
+                            <p class="red addressNumber">우편번호는 필수 입력입니다.</p>
                         </div>
                     </c:when>
                     <c:otherwise>
                         <div class="mb-3">
                             <label for="email" class="form-label">이메일</label>
                             <input type="email" class="form-control mb-1" id="email" name="email">
+                            <p class="red email">이메일은 필수 입력입니다.</p>
                         </div>
                         <div class="mb-3">
                             <label for="address" class="form-label">주소</label>
                             <input type="text" class="form-control mb-1" id="address" name="address">
+                            <p class="red address">주소는 필수 입력입니다.</p>
                         </div>
                         <div class="mb-3">
                             <label for="addressNumber" class="form-label">우편번호</label>
                             <input type="text" class="form-control" id="addressNumber"
                                    name="addressNumber">
+                            <p class="red addressNumber">우편번호는 필수 입력입니다.</p>
                         </div>
                     </c:otherwise>
                 </c:choose>

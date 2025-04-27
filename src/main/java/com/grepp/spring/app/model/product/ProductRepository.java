@@ -32,4 +32,8 @@ public interface ProductRepository {
     void updateImageById(ProductImg productImg);
 
     void updateProductAmountById(Integer id, Integer amount);
+
+    void updateOrderList(OrderListDto nonMember);
+
+    Integer selectProductAmountById(@Param("id") Integer id);
 }

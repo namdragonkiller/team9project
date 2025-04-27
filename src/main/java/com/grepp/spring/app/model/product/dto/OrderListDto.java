@@ -15,6 +15,8 @@ public class OrderListDto {
     private List<ProductItemDTO> items;
     private Boolean isMember;
     private String userId;
+    private Integer totalPrice; // 총 금액
+    private Integer totalAmount; // 총 갯수
 
     @Data
     public static class ProductItemDTO {

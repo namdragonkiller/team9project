@@ -111,6 +111,35 @@ document.getElementById('purchase-form').addEventListener('submit',
       const address = document.getElementById('address').value;
       const addressNumber = document.getElementById('addressNumber').value;
       const items = [];
+      const errorElement1 = document.querySelector('.red.email');
+      const errorElement2 = document.querySelector('.red.address');
+      const errorElement3 = document.querySelector('.red.addressNumber');
+
+      if (!email) {
+        if (errorElement1) {
+          errorElement1.style.display = 'block';
+        }
+        return;
+      }else {
+        errorElement1.style.display = 'none';
+      }
+      if (!address) {
+        if (errorElement2) {
+          errorElement2.style.display = 'block';
+        }
+        return;
+      }else {
+        errorElement2.style.display = 'none';
+      }
+      if (!addressNumber) {
+        if (errorElement3) {
+          errorElement3.style.display = 'block';
+        }
+        return;
+      }else {
+        errorElement3.style.display = 'none';
+      }
+
 
       document.querySelectorAll('#hidden-fields input').forEach(input => {
         const name = input.name.match(/\[([^\]]+)\]/)[1];  // 'items' 이름 추출
@@ -130,6 +159,11 @@ document.getElementById('purchase-form').addEventListener('submit',
           'meta[name="_csrf"]').getAttribute('content');
       const csrfHeader = document.querySelector(
           'meta[name="_csrf_header"]').getAttribute('content');
+
+      if (!items || items.length === 0) {
+        alert("장바구니가 비었습니다.")
+        return;
+      }
 
       const formData = new URLSearchParams();
       formData.append('email', email);
@@ -152,15 +186,28 @@ document.getElementById('purchase-form').addEventListener('submit',
       })
       .then(response => response.json())
       .then(data => {
+        if(data.msg === 0) {
+          alert("재고가 없습니다.");
+          return;
+        }
+
         if (data.success) {
+          const now = new Date();
+          const currentHour = now.getHours();
+          const currentTime = now.toLocaleTimeString();
+          if (currentHour >= 14) {  // 14시는 2PM (24시간 기준)
+            alert("현재시간은 " + currentTime + " 으로 다음날 배송을 시작합니다.");
+          } else {
+            alert("현재시간은 " + currentTime + " 으로 당일 배송을 시작합니다.");
+          }
           alert('결제 완료되었습니다.');
           window.location.href = '/';  // 메인페이지로 이동
         } else {
-          alert('결제 실패하였습니다.');
+          alert(data.errors.join("\n"));
         }
       })
       .catch(error => {
-        alert('서버와 통신 오류');
+        alert(error.message);
         console.error(error);
       });
     });

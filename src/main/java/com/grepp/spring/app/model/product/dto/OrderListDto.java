@@ -1,6 +1,7 @@
 package com.grepp.spring.app.model.product.dto;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import lombok.Data;
 
@@ -26,5 +27,9 @@ public class OrderListDto {
 
     public ProductItemDTO getItem() {
         return items != null && !items.isEmpty() ? items.get(0) : null;
+    }
+
+    public String getDate() {
+        return createdAt.format(DateTimeFormatter.ofPattern("yyyy.MM.dd a hh:mm:ss"));
     }
 }

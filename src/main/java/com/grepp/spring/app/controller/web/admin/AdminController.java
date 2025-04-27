@@ -2,9 +2,13 @@ package com.grepp.spring.app.controller.web.admin;
 
 import com.grepp.spring.app.controller.web.admin.payload.ProductModifyRequest;
 import com.grepp.spring.app.controller.web.admin.payload.ProductRegistRequest;
+import com.grepp.spring.app.model.order.OrderService;
 import com.grepp.spring.app.model.product.ProductService;
+import com.grepp.spring.app.model.product.dto.OrderListDto;
+import com.grepp.spring.app.model.product.dto.OrderProductDto;
 import com.grepp.spring.app.model.product.dto.ProductDto;
 import jakarta.validation.Valid;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +39,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class AdminController {
 
     private final ProductService productService;
+    private final OrderService orderService;
 
     // 제품 등록 페이지
     @GetMapping("product/regist")
@@ -100,4 +105,15 @@ public class AdminController {
         productService.updateById(id, request.getOldPath(), request.getNewImage(), request.toDto());
         return ResponseEntity.ok("수정 성공");
     }
+
+    @GetMapping("order")
+    public String orderList(Model model) {
+
+        List<OrderListDto> result = orderService.selectAll();
+
+        model.addAttribute("orders", result);
+
+        return "product/admin-order-list";
+    }
+
 }

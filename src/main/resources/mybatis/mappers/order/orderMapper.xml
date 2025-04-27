@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grepp.spring.app.model.order.OrderRepository">
+
+  <resultMap id="orderMap" type="com.grepp.spring.app.model.product.dto.OrderListDto">
+    <id property="id" column="id"/>
+    <collection property="orderProducts" column="id" ofType="OrderProductDto" select="selectByOrderProductId" />
+  </resultMap>
+
+<!--  resultMap="orderMap" -->
+  <select id="selectAll" parameterType="com.grepp.spring.app.model.product.dto.OrderListDto" >
+    select * from order_list;
+  </select>
+
+  <select id="selectByOrderProductId" parameterType="int" resultType="com.grepp.spring.app.model.product.dto.OrderProductDto">
+    SELECT * FROM order_product WHERE order_id = #{id}
+  </select>
+
+</mapper>

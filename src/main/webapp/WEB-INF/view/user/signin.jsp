@@ -10,7 +10,7 @@
 <%@include file="/WEB-INF/view/include/header.jsp" %>
 <%@include file="/WEB-INF/view/include/sidenav.jsp" %>
 <main class="container">
-    <c:if test="${not empty param.error}">
+    <c:if test="${not empty errorMessage}">
         <div class="card-panel red lighten-2 text-white">아이디나 비밀번호를 확인하세요</div>
     </c:if>
     <form:form modelAttribute="signinForm" class="col s12" action="/user/signin" method="post">

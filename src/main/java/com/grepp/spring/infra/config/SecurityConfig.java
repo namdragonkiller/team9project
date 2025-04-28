@@ -79,6 +79,10 @@ public class SecurityConfig {
                 .usernameParameter("id")
                 .passwordParameter("password")
                 .defaultSuccessUrl("/", true)
+                .failureHandler((request, response, exception) -> {
+                    request.setAttribute("errorMessage", "아이디나 비밀번호를 확인하세요");
+                    request.getRequestDispatcher("/user/signin").forward(request, response);
+                })
                 .permitAll()
             )
             .rememberMe(rememberMe -> rememberMe.key(rememberMeKey))

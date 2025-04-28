@@ -59,6 +59,12 @@ hr {
   line-height: 38px;
 }
 
+.red {
+  font-size: 13px;
+  color: red;
+  display: none;
+}
+
 /* 페이징 */
 
 .page-item.active .page-link {

@@ -14,6 +14,10 @@
     select * from product;
   </select>
 
+  <select id="selectProductAmountById" resultType="int">
+    SELECT amount FROM product WHERE id = #{id}
+  </select>
+
   <insert id="insert" parameterType="com.grepp.spring.app.model.product.dto.ProductDto" useGeneratedKeys="true" keyProperty="id">
     insert into product(name, price, amount, info) values (#{name}, #{price}, #{amount}, #{info})
   </insert>
@@ -26,7 +30,7 @@
   <insert id="insertPurchase" parameterType="com.grepp.spring.app.model.product.dto.OrderListDto" useGeneratedKeys="true" keyProperty="id">
     INSERT INTO coffee.order_list
     (email, address, address_number, amount, price, createdAt, is_member, user_id)
-    VALUES(#{email}, #{address}, #{addressNumber}, #{item.amount}, #{item.price}, CURRENT_TIMESTAMP, #{isMember}, #{userId});
+    VALUES(#{email}, #{address}, #{addressNumber}, #{totalAmount}, #{totalPrice}, CURRENT_TIMESTAMP, #{isMember}, #{userId});
   </insert>
 
   <insert id="insertOrderProduct"
@@ -47,6 +51,23 @@
   <select id="selectById" parameterType="com.grepp.spring.app.model.product.dto.ProductDto" resultMap="productMap">
     select * from product where id = #{id}
   </select>
+
+  <update id="updateOrderList" >
+    UPDATE order_list AS o
+    JOIN (
+    SELECT id
+    FROM (
+    SELECT id
+    FROM order_list
+    WHERE email = #{email}
+    ORDER BY createdAt ASC
+    LIMIT 1
+    ) AS subquery
+    ) AS t
+    ON o.id = t.id
+    SET o.amount = o.amount + #{totalAmount},
+    o.price = o.price + #{totalPrice};
+  </update>
 
   <update id="updateProductAmountById" >
     update product

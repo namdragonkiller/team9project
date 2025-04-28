@@ -11,6 +11,7 @@ import com.grepp.spring.infra.util.file.FileDto;
 import com.grepp.spring.infra.util.file.FileUtil;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.time.LocalTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -62,35 +63,58 @@ public class ProductService {
 
 
     @Transactional
-    public void purchaseProduct(OrderListDto dto) {
-        for (ProductItemDTO item : dto.getItems()) {
-            OrderListDto nonMember = new OrderListDto();
-            OrderProductDto product = new OrderProductDto();
+    public int purchaseProduct(OrderListDto dto) {
+        OrderListDto nonMember = new OrderListDto();
+        LocalTime now = LocalTime.now();
 
-            nonMember.setAddress(dto.getAddress());
-            nonMember.setEmail(dto.getEmail());
-            nonMember.setCreatedAt(dto.getCreatedAt());
-            nonMember.setAddressNumber(dto.getAddressNumber());
-            nonMember.setItems(List.of(item));
-            nonMember.setUserId(dto.getUserId());
+        // 총 갯수 계산
+        int totalAmount = dto.getItems().stream()
+            .mapToInt(ProductItemDTO::getAmount)
+            .sum();
 
-            nonMember.setIsMember(dto.getUserId() != null);
+        // 총 금액 계산
+        int totalPrice = dto.getItems().stream()
+            .mapToInt(item -> item.getPrice() * item.getAmount())
+            .sum();
 
+        nonMember.setAddress(dto.getAddress());
+        nonMember.setEmail(dto.getEmail());
+        nonMember.setCreatedAt(dto.getCreatedAt());
+        nonMember.setAddressNumber(dto.getAddressNumber());
+        nonMember.setItems(dto.getItems());
+        nonMember.setUserId(dto.getUserId());
+        nonMember.setIsMember(dto.getUserId() != null);
+        nonMember.setTotalPrice(totalPrice);
+        nonMember.setTotalAmount(totalAmount);
+
+        // 시간 체크해서 오후 2시 넘었으면 최초 데이터에 update
+        if (now.isAfter(LocalTime.of(14, 0))) {
+            productRepository.updateOrderList(nonMember);
+        } else {
             productRepository.insertPurchase(nonMember);
+        }
 
-
+        for (ProductItemDTO item : dto.getItems()) {
+            OrderProductDto product = new OrderProductDto();
             product.setOrderId(nonMember.getId());
             product.setProductId(item.getId());
             product.setAmount(item.getAmount());
 
             productRepository.insertOrderProduct(product);
 
-            // product table에 수량 update
-            int amount = item.getAmount();
-            productRepository.updateProductAmountById(item.getId(), amount);
+            // 재고 수량 체크 추가
+            int stock = productRepository.selectProductAmountById(item.getId()); // 현재 재고 가져오기
+            if (stock < item.getAmount()) {
+                int nonstock = 0;
+                return nonstock;
+            }
 
+            // 재고 차감
+            productRepository.updateProductAmountById(item.getId(), item.getAmount());
         }
+        return 1;
     }
+
 
     public ProductDto selectById(Integer id) {
         return productRepository.selectById(id);

@@ -62,7 +62,7 @@ public class AdminController {
     @GetMapping("product/list")
     public String list(@RequestParam(defaultValue = "1") int page, Model model) {
 
-        int pageSize = 5;
+        int pageSize = 6;
 
         List<ProductDto> products = productService.getProducts(page, pageSize);
         int totalProducts = productService.countProducts(); // 총 상품 개수

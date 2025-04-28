@@ -18,6 +18,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-direction: column; /* ← 추가 */
             padding: 0;
         }
         .cart-sidebar {
@@ -32,7 +33,10 @@
             border-radius: 8px;
             z-index: 999;
         }
-
+        .card {
+            transform: scale(0.9);
+            transform-origin: center center;
+        }
         .rounded-card {
             border-radius: 12px;
         }
@@ -49,7 +53,7 @@
         }
 
         .product-list {
-            margin-left: 280px;
+            margin-left: 230px;
         }
         .sold-out-overlay {
             position: absolute;
@@ -90,6 +94,36 @@
             text-align:center;
             opacity: 0;
             transition: all 0.3s ease;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center; /* 가로축 중앙 정렬 */
+            margin-top: 20px;
+        }
+        .page-link {
+            font-weight: 500;
+            font-size: 1rem;
+            text-align: center;
+            padding: 8px 12px;
+            border-radius: 6px;
+            background-color: #f8f8f8;
+            margin: 0 4px;
+            color: black;
+            text-decoration: none;
+        }
+
+        .page-item.active .page-link {
+            background-color: #f08080; /* 선택된 페이지 */
+            color: white;
+            border: none;
+        }
+
+        .page-link:hover {
+            background-color: #e0e0e0; /* 살짝 hover 효과 */
+        }
+
+        .page-item.disabled .page-link:hover {
+            background-color: #eee; /* 비활성은 hover 효과도 막기 */
         }
     </style>
 </head>
@@ -151,6 +185,40 @@
         </c:forEach>
     </div>
     <span class="target" style="display: block; height: 1px;"></span>
+    <ul class="pagination mt-3">
+        <c:if test="${currentPage > 1}">
+            <li class="page-item">
+                <a class="page-link" href="/?page=${currentPage - 1}">이전</a>
+            </li>
+        </c:if>
+        <c:if test="${currentPage == 1}">
+            <li class="page-item disabled">
+                <span class="page-link">이전</span>
+            </li>
+        </c:if>
+
+        <c:forEach var="i" begin="1" end="${totalPages}">
+            <c:choose>
+                <c:when test="${i == currentPage}">
+                    <li class="page-item active" aria-current="page">
+                        <a class="page-link" href="#">${i}</a>
+                    </li>
+                </c:when>
+                <c:otherwise>
+                    <li class="page-item"><a class="page-link" href="/?page=${i}">${i}</a></li>
+                </c:otherwise>
+            </c:choose>
+        </c:forEach>
+
+        <c:if test="${currentPage < totalPages}">
+            <li class="page-item"><a class="page-link" href="/?page=${currentPage + 1}">다음</a></li>
+        </c:if>
+        <c:if test="${currentPage == totalPages}">
+            <li class="page-item disabled">
+                <span class="page-link">다음</span>
+            </li>
+        </c:if>
+    </ul>
 </main>
 <div id="modalBackground" class="modalBackground" onclick="closeModal()"></div>
 
@@ -162,24 +230,6 @@
     <button onclick="closeModal()" style="margin-top:15px;" class="btn">닫기</button>
 </div>
 
-<div id="productCardTemplate" style="display: none;">
-    <div class="col s12 m6 no-padding" style="max-width: 400px;">
-        <div class="card hoverable rounded-card z-depth-2" style="margin: 5px;">
-            <div class="card-image">
-                <img src="${product.image.url}" style="height: 400px;" class="thumbnail">
-                <a class="btn-floating halfway-fab waves-effect black add-cart">
-                    <i class="material-icons">add_shopping_cart</i>
-                </a>
-            </div>
-            <input type="hidden" name="id" value="${product.id}">
-            <div class="card-content">
-                <span class="card-title name"></span>
-                <p class="info blue-grey-text"></p>
-                <div class="price center-align custom-price"><p></p></div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <%@include file="/WEB-INF/view/include/footer.jsp" %>
 <script src="${context}/assets/js/sidebar.js" defer></script>

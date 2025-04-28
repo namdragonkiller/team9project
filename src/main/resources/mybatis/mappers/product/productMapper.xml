@@ -18,6 +18,10 @@
     SELECT amount FROM product WHERE id = #{id}
   </select>
 
+  <select id="selectPaged" resultMap="productMap">
+    select * from product order by created_at desc limit #{start}, #{offset}
+  </select>
+
   <insert id="insert" parameterType="com.grepp.spring.app.model.product.dto.ProductDto" useGeneratedKeys="true" keyProperty="id">
     insert into product(name, price, amount, info) values (#{name}, #{price}, #{amount}, #{info})
   </insert>

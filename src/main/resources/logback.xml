@@ -19,7 +19,7 @@
   <property name="LOG_PATTERN"
     value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"/>
 
-  <root level="DEBUG">
+  <root level="Info">
     <appender-ref ref="CONSOLE"/>
   </root>
 

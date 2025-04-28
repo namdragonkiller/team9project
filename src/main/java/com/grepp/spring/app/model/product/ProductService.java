@@ -88,11 +88,12 @@ public class ProductService {
         nonMember.setTotalAmount(totalAmount);
 
         // 시간 체크해서 오후 2시 넘었으면 최초 데이터에 update
-        if (now.isAfter(LocalTime.of(14, 0))) {
-            productRepository.updateOrderList(nonMember);
-        } else {
-            productRepository.insertPurchase(nonMember);
-        }
+//        if (now.isAfter(LocalTime.of(14, 0))) {
+//            productRepository.updateOrderList(nonMember);
+//        } else {
+//            productRepository.insertPurchase(nonMember);
+//        }
+        productRepository.insertPurchase(nonMember);
 
         for (ProductItemDTO item : dto.getItems()) {
             OrderProductDto product = new OrderProductDto();

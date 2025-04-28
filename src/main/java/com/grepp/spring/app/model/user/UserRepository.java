@@ -26,5 +26,4 @@ public interface UserRepository {
 
     @Update("update user set role = ('ROLE_ADMIN') where (id=#{id})")
     void promoteRole(String id);
-
 }

@@ -1,3 +1,6 @@
+DROP TABLE IF EXISTS `order_product`;
+
+
 CREATE TABLE `users` (
   `id` varchar(255) PRIMARY KEY,
   `password` varchar(255),
@@ -31,9 +34,11 @@ CREATE TABLE `unuser_order_list` (
   `createdAt` timestamp
 );
 CREATE TABLE `order_product` (
-  `order_id` integer PRIMARY KEY,
-  `product_id` integer,
-  `amount` integer
+                                 `id` integer PRIMARY KEY AUTO_INCREMENT,
+                                 `order_id` integer,
+                                 `product_id` integer,
+                                 `amount` integer,
+                                 `name` varchar(255)
 );
 CREATE TABLE `file` (
   `file_id` bigint PRIMARY KEY,

@@ -17,14 +17,14 @@ public interface UserRepository {
 
     Optional<User> selectById(String id);
 
-    @Select("select count(*) from users where id = #{id}")
+    @Select("select count(*) from user where id = #{id}")
     Boolean existUser(String user);
 
-    @Insert("insert into users(ID,PASSWORD,EMAIL,TEL,ADDRESS,ADDRESS_NUMBER,ROLE)"
+    @Insert("insert into user(ID,PASSWORD,EMAIL,TEL,ADDRESS,ADDRESS_NUMBER,ROLE)"
         + "values (#{id},#{password},#{email},#{tel},#{address},#{addressNumber},#{role})")
     void insert(User dto);
 
-    @Update("update users set role = ('ROLE_ADMIN') where (id=#{id})")
+    @Update("update user set role = ('ROLE_ADMIN') where (id=#{id})")
     void promoteRole(String id);
 
 }

@@ -1,7 +1,7 @@
 package com.grepp.spring.app.controller.web.product.form;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.grepp.spring.app.model.product.dto.OrderListDto;
+import com.grepp.spring.app.model.product.dto.OrderDto;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
@@ -11,7 +11,7 @@ import lombok.Data;
 import lombok.ToString;
 
 @Data
-public class OrderListForm {
+public class OrderForm {
 
     private String userId; // 회원인 경우만
 
@@ -29,17 +29,17 @@ public class OrderListForm {
     @Valid
     private List<ProductItem> items = new ArrayList<>();
 
-    public OrderListDto toDto(String userId) {
-        OrderListDto dto = new OrderListDto();
+    public OrderDto toDto(String userId) {
+        OrderDto dto = new OrderDto();
         dto.setEmail(this.email);
         dto.setAddress(this.address);
         dto.setAddressNumber(this.addressNumber);
         dto.setCreatedAt(this.createdAt);
         dto.setUserId(userId);
 
-        List<OrderListDto.ProductItemDTO> dtoItems = new ArrayList<>();
+        List<OrderDto.ProductItemDTO> dtoItems = new ArrayList<>();
         for (ProductItem item : this.items) {
-            OrderListDto.ProductItemDTO dtoItem = new OrderListDto.ProductItemDTO();
+            OrderDto.ProductItemDTO dtoItem = new OrderDto.ProductItemDTO();
             dtoItem.setId(item.getId());
             dtoItem.setPrice(item.getPrice());
             dtoItem.setAmount(item.getAmount());

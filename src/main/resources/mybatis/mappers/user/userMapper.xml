@@ -19,7 +19,7 @@
   </resultMap>
 
   <select id="selectById" resultMap="userMap">
-    select * from users where id = #{id}
+    select * from user where id = #{id}
   </select>
 
 </mapper>

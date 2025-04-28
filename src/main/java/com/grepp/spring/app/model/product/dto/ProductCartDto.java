@@ -1,7 +1,5 @@
 package com.grepp.spring.app.model.product.dto;
 
-import com.grepp.spring.app.model.product.dto.OrderListDto.ProductItemDTO;
-import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Data;
 

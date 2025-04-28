@@ -4,11 +4,9 @@ import com.grepp.spring.app.controller.web.admin.payload.ProductModifyRequest;
 import com.grepp.spring.app.controller.web.admin.payload.ProductRegistRequest;
 import com.grepp.spring.app.model.order.OrderService;
 import com.grepp.spring.app.model.product.ProductService;
-import com.grepp.spring.app.model.product.dto.OrderListDto;
-import com.grepp.spring.app.model.product.dto.OrderProductDto;
+import com.grepp.spring.app.model.product.dto.OrderDto;
 import com.grepp.spring.app.model.product.dto.ProductDto;
 import jakarta.validation.Valid;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -116,7 +113,7 @@ public class AdminController {
     @GetMapping("order")
     public String orderList(Model model) {
 
-        List<OrderListDto> result = orderService.selectAll();
+        List<OrderDto> result = orderService.selectAll();
 
         model.addAttribute("orders", result);
 

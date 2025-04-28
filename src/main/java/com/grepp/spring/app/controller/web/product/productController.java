@@ -1,6 +1,6 @@
 package com.grepp.spring.app.controller.web.product;
 
-import com.grepp.spring.app.controller.web.product.form.OrderListForm;
+import com.grepp.spring.app.controller.web.product.form.OrderForm;
 import com.grepp.spring.app.controller.web.product.form.ProductCartForm;
 import com.grepp.spring.app.model.product.ProductService;
 import com.grepp.spring.app.model.product.dto.ProductCartDto;
@@ -14,17 +14,14 @@ import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @Slf4j
@@ -134,7 +131,7 @@ public class productController {
 
     // 구매하기
     @PostMapping("/purchase")
-    public ResponseEntity<Map<String, Object>> purchaseProducts(Authentication authentication,@ModelAttribute @Valid OrderListForm form) {
+    public ResponseEntity<Map<String, Object>> purchaseProducts(Authentication authentication,@ModelAttribute @Valid OrderForm form) {
 
         String userId = null;
         if(authentication != null) {

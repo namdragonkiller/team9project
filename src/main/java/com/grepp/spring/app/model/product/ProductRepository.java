@@ -1,6 +1,6 @@
 package com.grepp.spring.app.model.product;
 
-import com.grepp.spring.app.model.product.dto.OrderListDto;
+import com.grepp.spring.app.model.product.dto.OrderDto;
 import com.grepp.spring.app.model.product.dto.OrderProductDto;
 import com.grepp.spring.app.model.product.dto.ProductDto;
 import com.grepp.spring.app.model.product.dto.ProductImg;
@@ -21,7 +21,7 @@ public interface ProductRepository {
     boolean deleteById(Integer id);
     List<ProductDto> selectAll();
 
-    void insertPurchase(OrderListDto nonMember);
+    void insertPurchase(OrderDto nonMember);
 
     void insertOrderProduct(OrderProductDto product);
 
@@ -33,7 +33,7 @@ public interface ProductRepository {
 
     void updateProductAmountById(Integer id, Integer amount);
 
-    void updateOrderList(OrderListDto nonMember);
+    void updateOrderList(OrderDto nonMember);
 
     Integer selectProductAmountById(@Param("id") Integer id);
 

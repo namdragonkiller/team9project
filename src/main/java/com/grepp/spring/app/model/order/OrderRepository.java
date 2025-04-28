@@ -1,7 +1,6 @@
 package com.grepp.spring.app.model.order;
 
-import com.grepp.spring.app.model.product.dto.OrderListDto;
-import com.grepp.spring.app.model.product.dto.OrderProductDto;
+import com.grepp.spring.app.model.product.dto.OrderDto;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -10,7 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface OrderRepository {
 
-    List<OrderListDto> selectAll();
+    List<OrderDto> selectAll();
 
     boolean deleteById(Integer id);
 }

@@ -1,7 +1,7 @@
 package com.grepp.spring.app.controller.web.product.form;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.grepp.spring.app.model.product.dto.OrderListDto;
+import com.grepp.spring.app.model.product.dto.OrderDto;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
@@ -27,16 +27,16 @@ public class NonMemberForm {
     @Valid
     private List<ProductItem> items = new ArrayList<>();
 
-    public OrderListDto toDto() {
-        OrderListDto dto = new OrderListDto();
+    public OrderDto toDto() {
+        OrderDto dto = new OrderDto();
         dto.setEmail(this.email);
         dto.setAddress(this.address);
         dto.setAddressNumber(this.addressNumber);
         dto.setCreatedAt(this.createdAt);
 
-        List<OrderListDto.ProductItemDTO> dtoItems = new ArrayList<>();
+        List<OrderDto.ProductItemDTO> dtoItems = new ArrayList<>();
         for (ProductItem item : this.items) {
-            OrderListDto.ProductItemDTO dtoItem = new OrderListDto.ProductItemDTO();
+            OrderDto.ProductItemDTO dtoItem = new OrderDto.ProductItemDTO();
             dtoItem.setId(item.getId());
             dtoItem.setPrice(item.getPrice());
             dtoItem.setAmount(item.getAmount());

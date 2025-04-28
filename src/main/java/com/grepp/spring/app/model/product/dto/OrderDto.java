@@ -6,7 +6,7 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class OrderListDto {
+public class OrderDto {
 
     private Long id;
     private String email;

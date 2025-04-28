@@ -1,7 +1,6 @@
 package com.grepp.spring.app.model.order;
 
-import com.grepp.spring.app.model.product.dto.OrderListDto;
-import java.io.IOException;
+import com.grepp.spring.app.model.product.dto.OrderDto;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +15,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
 
 
-    public List<OrderListDto> selectAll() {
+    public List<OrderDto> selectAll() {
         return orderRepository.selectAll();
     }
 

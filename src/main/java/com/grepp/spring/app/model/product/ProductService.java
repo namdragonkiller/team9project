@@ -1,7 +1,7 @@
 package com.grepp.spring.app.model.product;
 
-import com.grepp.spring.app.model.product.dto.OrderListDto;
-import com.grepp.spring.app.model.product.dto.OrderListDto.ProductItemDTO;
+import com.grepp.spring.app.model.product.dto.OrderDto;
+import com.grepp.spring.app.model.product.dto.OrderDto.ProductItemDTO;
 import com.grepp.spring.app.model.product.dto.OrderProductDto;
 import com.grepp.spring.app.model.product.dto.ProductDto;
 import com.grepp.spring.app.model.product.dto.ProductImg;
@@ -10,9 +10,7 @@ import com.grepp.spring.infra.response.ResponseCode;
 import com.grepp.spring.infra.util.file.FileDto;
 import com.grepp.spring.infra.util.file.FileUtil;
 
-import java.awt.print.Book;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.time.LocalTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -65,8 +63,8 @@ public class ProductService {
 
 
     @Transactional
-    public int purchaseProduct(OrderListDto dto) {
-        OrderListDto nonMember = new OrderListDto();
+    public int purchaseProduct(OrderDto dto) {
+        OrderDto nonMember = new OrderDto();
         LocalTime now = LocalTime.now();
 
         // 총 갯수 계산

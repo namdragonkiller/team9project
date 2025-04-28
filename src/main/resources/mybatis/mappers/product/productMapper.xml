@@ -31,8 +31,8 @@
     values (#{productId}, #{originFileName}, #{renameFileName}, #{savePath})
   </insert>
 
-  <insert id="insertPurchase" parameterType="com.grepp.spring.app.model.product.dto.OrderListDto" useGeneratedKeys="true" keyProperty="id">
-    INSERT INTO coffee.order_list
+  <insert id="insertPurchase" parameterType="com.grepp.spring.app.model.product.dto.OrderDto" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO coffee.order
     (email, address, address_number, total_amount, total_price, createdAt, is_member, user_id)
     VALUES(#{email}, #{address}, #{addressNumber}, #{totalAmount}, #{totalPrice}, CURRENT_TIMESTAMP, #{isMember}, #{userId});
   </insert>
@@ -57,12 +57,12 @@
   </select>
 
   <update id="updateOrderList" >
-    UPDATE order_list AS o
+    UPDATE `order` AS o
     JOIN (
     SELECT id
     FROM (
     SELECT id
-    FROM order_list
+    FROM `order`
     WHERE email = #{email}
     ORDER BY createdAt ASC
     LIMIT 1

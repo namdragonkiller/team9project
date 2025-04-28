@@ -4,14 +4,14 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.grepp.spring.app.model.order.OrderRepository">
 
-  <resultMap id="orderMap" type="com.grepp.spring.app.model.product.dto.OrderListDto">
+  <resultMap id="orderMap" type="com.grepp.spring.app.model.product.dto.OrderDto">
     <id property="id" column="id"/>
     <collection property="orderProducts" column="id" ofType="OrderProductDto" select="selectByOrderProductId" />
   </resultMap>
 
 <!--  resultMap="orderMap" -->
-  <select id="selectAll" parameterType="com.grepp.spring.app.model.product.dto.OrderListDto" resultMap="orderMap">
-    select * from order_list ORDER BY createdAt DESC ;
+  <select id="selectAll" parameterType="com.grepp.spring.app.model.product.dto.OrderDto" resultMap="orderMap">
+    select * from `order` ORDER BY createdAt DESC ;
   </select>
 
   <select id="selectByOrderProductId" parameterType="int" resultType="com.grepp.spring.app.model.product.dto.OrderProductDto">
@@ -19,6 +19,6 @@
   </select>
 
   <delete id="deleteById" parameterType="int" >
-    delete from order_list where id = #{id}
+    delete from `order` where id = #{id}
   </delete>
 </mapper>

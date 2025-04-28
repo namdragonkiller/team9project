@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@include file="/WEB-INF/view/include/page.jsp" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
@@ -90,24 +91,30 @@
                 <div class="card hoverable rounded-card z-depth-2" style="margin: 5px;">
                     <div class="card-image" style="position: relative;">
                         <img src="${product.image.url}"
-                             style="height: 400px; filter: ${product.amount == 0 ? 'brightness(50%)' : 'none'};"
+                             style="height: 400px; filter: ${product.amount <= 0 ? 'brightness(50%)' : 'none'};"
                              class="thumbnail">
 
-                        <c:if test="${product.amount == 0}">
+                        <c:if test="${product.amount <= 0}">
                             <div class="sold-out-overlay">
                                 SOLD OUT
                             </div>
                         </c:if>
 
                         <a class="btn-floating halfway-fab waves-effect black add-cart"
-                           style="${product.amount == 0 ? 'pointer-events: none; opacity: 0.5;' : ''}">
+                           style="${product.amount <= 0 ? 'pointer-events: none; opacity: 0.5;' : ''}">
                             <i class="material-icons">add_shopping_cart</i>
                         </a>
                     </div>
                     <input type="hidden" name="id" value="${product.id}">
                     <div class="card-content">
                         <span class="card-title name"><c:out value="${product.name}"/></span>
-                        <p class="info blue-grey-text"><c:out value="${product.info}"/></p>
+
+                        <c:if test="${product.amount <= 5 and product.amount > 0}">
+                            <p class="info blue-grey-text"><c:out value="${product.amount}개 남음"/></p>
+                        </c:if>
+                        <c:if test="${product.amount > 5 or product.amount <=0}">
+                            <br>
+                        </c:if>
                         <div class="price center-align custom-price">
                             <p><c:out value="${product.price}"/>원</p>
                         </div>

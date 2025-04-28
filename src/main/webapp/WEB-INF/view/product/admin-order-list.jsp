@@ -91,45 +91,47 @@
             <ul class="list-group products">
                 <li class="list-group-item d-flex mt-3" style="background-color: #ddd;">
                     <div class="col">번호</div>
-                    <div class="col-2">아이디/이메일</div>
-                    <div class="col">주소</div>
+                    <div class="col-3">아이디/이메일</div>
+                    <div class="col-2">주소</div>
                     <div class="col">가격</div>
                     <div class="col">주문시간</div>
-                    <div class="col">구매내역</div>
+                    <div class="col-2">구매내역</div>
                     <div class="col">취소</div>
                 </li>
                 <c:forEach items="${orders}" var="order" varStatus="status">
                     <li class="list-group-item d-flex mt-3">
                         <div class="col">
-                            ${order.id}
+                                ${order.id}
                         </div>
                         <c:if test="${order.isMember}">
-                            <div class="col-2">
+                            <div class="col-3">
                                     ${order.userId}
                             </div>
                         </c:if>
                         <c:if test="${not order.isMember}">
-                            <div class="col-2">
+                            <div class="col-3">
                                     ${order.email}
                             </div>
                         </c:if>
-                        <div class="col">
+                        <div class="col-2">
                             <div class="row">${order.address}</div>
                             <div class="row">${order.addressNumber}</div>
                         </div>
                         <div class="col">${order.totalPrice}원</div>
 
                         <div class="col">
-                            ${order.date}
+                                ${order.date}
                         </div>
-                        <div class="col">
-                            <c:forEach items="${order.orderProducts}" var="orderProduct" varStatus="status">
+                        <div class="col-2">
+                            <c:forEach items="${order.orderProducts}" var="orderProduct"
+                                       varStatus="status">
                                 ${orderProduct.name} (${orderProduct.amount}개)
+                                <c:if test="${!status.last}">, </c:if>
                             </c:forEach>
                         </div>
                         <div class="col action">
                             <button class="btn btn-small btn-outline-dark"
-                                    onclick="deleteProduct(${order.id})">취소
+                                    onclick="deleteOrder(${order.id})">취소
                             </button>
                         </div>
                     </li>
@@ -138,5 +140,28 @@
         </div>
     </div>
 </div>
+<script>
+  const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+  const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+
+  function deleteOrder(orderId) {
+    if (!confirm("정말 주문 취소하시겠습니까?")) return;
+
+    fetch(`/admin/order/` + orderId, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'text/plain',
+        [csrfHeader]: csrfToken
+      },
+      redirect: 'follow'
+    }).then(response => {
+      if (response.ok) {
+        window.location.href = '/admin/order';
+      } else {
+        alert('취소 실패');
+      }
+    });
+  }
+</script>
 </body>
 </html>

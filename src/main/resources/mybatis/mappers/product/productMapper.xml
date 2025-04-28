@@ -29,7 +29,7 @@
 
   <insert id="insertPurchase" parameterType="com.grepp.spring.app.model.product.dto.OrderListDto" useGeneratedKeys="true" keyProperty="id">
     INSERT INTO coffee.order_list
-    (email, address, address_number, amount, price, createdAt, is_member, user_id)
+    (email, address, address_number, total_amount, total_price, createdAt, is_member, user_id)
     VALUES(#{email}, #{address}, #{addressNumber}, #{totalAmount}, #{totalPrice}, CURRENT_TIMESTAMP, #{isMember}, #{userId});
   </insert>
 
@@ -65,7 +65,7 @@
     ) AS subquery
     ) AS t
     ON o.id = t.id
-    SET o.amount = o.amount + #{totalAmount},
+    SET o.total_amount = o.total_amount + #{totalAmount},
     o.price = o.price + #{totalPrice};
   </update>
 

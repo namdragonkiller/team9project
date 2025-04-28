@@ -12,4 +12,5 @@ public interface OrderRepository {
 
     List<OrderListDto> selectAll();
 
+    boolean deleteById(Integer id);
 }

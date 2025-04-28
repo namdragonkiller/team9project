@@ -123,4 +123,17 @@ public class AdminController {
         return "product/admin-order-list";
     }
 
+    @DeleteMapping("order/{id}")
+    @ResponseBody
+    public ResponseEntity<String> deleteOrder(@PathVariable Integer id) {
+
+        boolean result = orderService.deleteById(id);
+
+        if (result) {
+            return ResponseEntity.ok("취소 성공");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("취소 실패");
+        }
+    }
+
 }

@@ -18,4 +18,7 @@
     SELECT * FROM order_product WHERE order_id = #{id}
   </select>
 
+  <delete id="deleteById" parameterType="int" >
+    delete from order_list where id = #{id}
+  </delete>
 </mapper>

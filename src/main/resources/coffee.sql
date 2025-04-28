@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS `order_list`;
+
 CREATE TABLE `users` (
                          `id` varchar(255) PRIMARY KEY,
                          `password` varchar(255),
@@ -29,8 +31,8 @@ CREATE TABLE order_list (
                             `email` VARCHAR(255),
                             `address` VARCHAR(255),
                             `address_number` VARCHAR(255),
-                            `amount` integer,
-                            `price` integer,
+                            `total_amount` integer,
+                            `total_price` integer,
                             `createdAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                             `is_member` BOOLEAN DEFAULT FALSE,         -- 회원 여부 (기본값은 비회원)
                             `user_id` varchar(255) DEFAULT NULL,       -- 회원일 경우 참조할 user 테이블 ID
@@ -47,7 +49,7 @@ CREATE TABLE `order_product` (
 
 
 ALTER TABLE `product_image` ADD CONSTRAINT `fk_product_image_product`
-    FOREIGN KEY (`product_id`) REFERENCES `product` (`id`);
+    FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE;
 ALTER TABLE `order_list` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 ALTER TABLE `order_product` ADD FOREIGN KEY (`product_id`) REFERENCES `product` (`id`);
-ALTER TABLE `order_product` ADD FOREIGN KEY (`order_id`) REFERENCES `order_list` (`id`);
+ALTER TABLE `order_product` ADD FOREIGN KEY (`order_id`) REFERENCES `order_list` (`id`) ON DELETE CASCADE;

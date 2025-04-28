@@ -86,4 +86,15 @@
     set ORIGIN_FILE_NAME=#{originFileName}, RENAME_FILE_NAME=#{renameFileName}, SAVE_PATH=#{savePath}
     where product_id = #{productId}
   </update>
+
+  <select id="findProducts" resultType="com.grepp.spring.app.model.product.dto.ProductDto" resultMap="productMap">
+    SELECT * FROM product
+    ORDER BY id ASC
+    LIMIT #{pageSize} OFFSET #{offset}
+  </select>
+
+  <select id="countProducts" resultType="int">
+    SELECT COUNT(*) FROM product
+  </select>
+
 </mapper>

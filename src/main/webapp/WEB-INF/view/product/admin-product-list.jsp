@@ -108,15 +108,50 @@
                         <div class="col">${product.amount}개</div>
                         <div class="col action">
                             <button class="btn btn-small btn-outline-dark"
-                            onclick="window.location.href = '/admin/product/${product.id}'">수정</button>
+                                    onclick="window.location.href = '/admin/product/${product.id}'">
+                                수정
+                            </button>
                         </div>
                         <div class="col action">
                             <button class="btn btn-small btn-outline-dark"
-                                    onclick="deleteProduct(${product.id}, '${product.image.path}')">삭제
+                                    onclick="deleteProduct(${product.id}, '${product.image.path}')">
+                                삭제
                             </button>
                         </div>
                     </li>
                 </c:forEach>
+            </ul>
+            <ul class="pagination mt-3">
+                <c:if test="${currentPage > 1}">
+                    <li class="page-item"><a class="page-link" href="/admin/product/list?page=${currentPage - 1}">이전</a></li>
+                </c:if>
+                <c:if test="${currentPage == 1}">
+                    <li class="page-item disabled">
+                        <span class="page-link">이전</span>
+                    </li>
+                </c:if>
+
+                <c:forEach var="i" begin="1" end="${totalPages}">
+                    <c:choose>
+                        <c:when test="${i == currentPage}">
+                            <li class="page-item active" aria-current="page">
+                                <a class="page-link" href="#">${i}</a>
+                            </li>
+                        </c:when>
+                        <c:otherwise>
+                            <li class="page-item"><a class="page-link" href="/admin/product/list?page=${i}">${i}</a></li>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+
+                <c:if test="${currentPage < totalPages}">
+                    <li class="page-item"><a class="page-link" href="/admin/product/list?page=${currentPage + 1}">다음</a></li>
+                </c:if>
+                <c:if test="${currentPage == totalPages}">
+                    <li class="page-item disabled">
+                        <span class="page-link">다음</span>
+                    </li>
+                </c:if>
             </ul>
         </div>
     </div>

@@ -36,4 +36,8 @@ public interface ProductRepository {
     void updateOrderList(OrderListDto nonMember);
 
     Integer selectProductAmountById(@Param("id") Integer id);
+
+    List<ProductDto> findProducts(int offset, int pageSize);
+
+    int countProducts();
 }

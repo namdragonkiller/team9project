@@ -140,4 +140,13 @@ public class ProductService {
         }
 
     }
+
+    public List<ProductDto> getProducts(int page, int pageSize) {
+        int offset = (page - 1) * pageSize;
+        return productRepository.findProducts(offset, pageSize);
+    }
+
+    public int countProducts() {
+        return productRepository.countProducts();
+    }
 }

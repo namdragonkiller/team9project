@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -59,11 +60,17 @@ public class AdminController {
     }
 
     @GetMapping("product/list")
-    public String list(Model model) {
+    public String list(@RequestParam(defaultValue = "1") int page, Model model) {
 
-        List<ProductDto> result = productService.selectAll();
+        int pageSize = 5;
 
-        model.addAttribute("products", result);
+        List<ProductDto> products = productService.getProducts(page, pageSize);
+        int totalProducts = productService.countProducts(); // 총 상품 개수
+        int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
+
+        model.addAttribute("products", products);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", totalPages);
         return "product/admin-product-list";
     }
 

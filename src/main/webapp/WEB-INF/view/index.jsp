@@ -34,8 +34,36 @@
             z-index: 999;
         }
         .card {
+            height: 550px; /* 카드 전체 높이 고정 */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* 위-아래 정렬 */
+            overflow: hidden;
             transform: scale(0.9);
             transform-origin: center center;
+        }
+        .card-content {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .card-top {
+            flex-grow: 1;
+        }
+
+        .card-bottom {
+            text-align: center;
+            margin-top: auto; /* 항상 아래로 밀어 */
+        }
+        .card-title.name {
+            display: block;
+            overflow-wrap: break-word; /* 긴 단어 줄바꿈 허용 */
+            word-break: break-word; /* 단어 중간이라도 줄바꿈 허용 */
+            white-space: normal; /* 여러 줄 허용 */
+            font-size: 1.2rem;
+            text-align: center;
+            margin: 10px 0 0 0;
         }
         .rounded-card {
             border-radius: 12px;
@@ -113,17 +141,16 @@
         }
 
         .page-item.active .page-link {
-            background-color: #f08080; /* 선택된 페이지 */
+            background-color: #f08080;
             color: white;
             border: none;
         }
-
         .page-link:hover {
-            background-color: #e0e0e0; /* 살짝 hover 효과 */
+            background-color: #e0e0e0;
         }
 
         .page-item.disabled .page-link:hover {
-            background-color: #eee; /* 비활성은 hover 효과도 막기 */
+            background-color: #eee;
         }
     </style>
 </head>
@@ -167,18 +194,27 @@
                         </a>
                     </div>
                     <input type="hidden" name="id" value="${product.id}">
-                    <div class="card-content">
-                        <span class="card-title name"><c:out value="${product.name}"/></span>
+                    <div class="card-content" style="position: relative; height: 140px; overflow: hidden;">
+
+    <span class="card-title name" style="display: block; word-break: keep-all; text-align: center;">
+        <c:out value="${product.name}"/>
+    </span>
 
                         <c:if test="${product.amount <= 5 and product.amount > 0}">
-                            <p class="info blue-grey-text"><c:out value="${product.amount}개 남음"/></p>
+                            <p class="info blue-grey-text" style="text-align: center; margin-top: 4px;">
+                                <c:out value="${product.amount}개 남음"/>
+                            </p>
                         </c:if>
-                        <c:if test="${product.amount > 5 or product.amount <=0}">
+                        <c:if test="${product.amount > 5 or product.amount <= 0}">
                             <br>
                         </c:if>
-                        <div class="price center-align custom-price">
-                            <p><fmt:formatNumber value="${product.price}" type="number" groupingUsed="true"/>원</p>
+
+                        <div class="price center-align custom-price" style="position: absolute; left: 50%; transform: translateX(-50%); bottom: 10px;">
+                            <p style="font-size: 1.1rem; font-weight: bold;">
+                                <fmt:formatNumber value="${product.price}" type="number" groupingUsed="true"/>원
+                            </p>
                         </div>
+
                     </div>
                 </div>
             </div>

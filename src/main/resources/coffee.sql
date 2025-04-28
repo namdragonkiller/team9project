@@ -59,13 +59,8 @@ CREATE TABLE `product_image` (
 -- 외래키 추가 (product_image.product_id -> product.id)
 ALTER TABLE `product_image` ADD CONSTRAINT `fk_product_image_product`
   FOREIGN KEY (`product_id`) REFERENCES `product` (`id`);
--- user_order_list.user_id -> users.id
-ALTER TABLE `user_order_list` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
 -- order_product.product_id -> product.id
 ALTER TABLE `order_product` ADD FOREIGN KEY (`product_id`) REFERENCES `product` (`id`);
--- order_product.order_id -> user_order_list.id
-ALTER TABLE `order_product` ADD FOREIGN KEY (`order_id`) REFERENCES `user_order_list` (`id`);
--- order_product.order_id -> unuser_order_list.id
-ALTER TABLE `order_product` ADD FOREIGN KEY (`order_id`) REFERENCES `unuser_order_list` (`id`);
 -- product_image.file_id -> file.file_id
 ALTER TABLE `product_image` ADD FOREIGN KEY (`file_id`) REFERENCES `file` (`file_id`);

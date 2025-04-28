@@ -10,7 +10,7 @@
   </resultMap>
 
 <!--  resultMap="orderMap" -->
-  <select id="selectAll" parameterType="com.grepp.spring.app.model.product.dto.OrderListDto" >
+  <select id="selectAll" parameterType="com.grepp.spring.app.model.product.dto.OrderListDto" resultMap="orderMap">
     select * from order_list;
   </select>
 

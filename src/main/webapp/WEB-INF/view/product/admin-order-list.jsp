@@ -117,12 +117,16 @@
                             <div class="row">${order.address}</div>
                             <div class="row">${order.addressNumber}</div>
                         </div>
-                        <div class="col">${order.item.price}원</div>
+                        <div class="col">${order.totalPrice}원</div>
 
                         <div class="col">
                             ${order.date}
                         </div>
-                        <div class="col">(${order.item.amount}개)</div>
+                        <div class="col">
+                            <c:forEach items="${order.orderProducts}" var="orderProduct" varStatus="status">
+                                ${orderProduct.name} (${orderProduct.amount}개)
+                            </c:forEach>
+                        </div>
                         <div class="col action">
                             <button class="btn btn-small btn-outline-dark"
                                     onclick="deleteProduct(${order.id})">취소

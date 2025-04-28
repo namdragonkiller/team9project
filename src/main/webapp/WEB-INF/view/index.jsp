@@ -68,6 +68,29 @@
         a.add-cart[style*="pointer-events: none"] {
             cursor: not-allowed;
         }
+        .modalBackground{
+            display:none;
+            position:fixed;
+            top:0; left:0; width:100%; height:100%;
+            background:rgba(0,0,0,0.6);
+            z-index:999;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .productModal{
+            display:none;
+            position:fixed;
+            top:50%; left:50%; transform:translate(-50%, -50%) scale(0.8);
+            background:white;
+            padding:20px;
+            box-shadow:0 10px 30px rgba(0,0,0,0.3);
+            border-radius:12px;
+            z-index:1000;
+            max-width:600px; width:90%;
+            text-align:center;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
     </style>
 </head>
 <body>
@@ -88,7 +111,11 @@
     <div class="product-list row center-wrapper">
         <c:forEach items="${products}" var="product">
             <div class="col s12 m6 no-padding" style="max-width: 400px;">
-                <div class="card hoverable rounded-card z-depth-2" style="margin: 5px;">
+                <div class="card hoverable rounded-card z-depth-2" style="margin: 5px;"
+                     data-name="${product.name}"
+                     data-image="${product.image.url}"
+                     data-info="${product.info}"
+                     data-price="${product.price}">
                     <div class="card-image" style="position: relative;">
                         <img src="${product.image.url}"
                              style="height: 400px; filter: ${product.amount <= 0 ? 'brightness(50%)' : 'none'};"
@@ -125,6 +152,15 @@
     </div>
     <span class="target" style="display: block; height: 1px;"></span>
 </main>
+<div id="modalBackground" class="modalBackground" onclick="closeModal()"></div>
+
+<div id="productModal" class="productModal" >
+    <img id="modalProductImage" src="" alt="상품 이미지" style="width:100%; border-radius:8px;">
+    <h5 id="modalProductName" style="margin-top:15px;"></h5>
+    <p id="modalProductInfo" style="color:gray;"></p>
+    <p id="modalProductPrice" style="font-weight:bold; font-size:18px;"></p>
+    <button onclick="closeModal()" style="margin-top:15px;" class="btn">닫기</button>
+</div>
 
 <div id="productCardTemplate" style="display: none;">
     <div class="col s12 m6 no-padding" style="max-width: 400px;">
@@ -147,5 +183,6 @@
 
 <%@include file="/WEB-INF/view/include/footer.jsp" %>
 <script src="${context}/assets/js/sidebar.js" defer></script>
+<script src="${context}/assets/js/product-info.js" defer></script>
 </body>
 </html>

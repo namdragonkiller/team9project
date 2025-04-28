@@ -1,10 +1,3 @@
-DROP TABLE IF EXISTS `order_product`;
-DROP TABLE IF EXISTS `product_image`;
-DROP TABLE IF EXISTS `product`;
-DROP TABLE IF EXISTS `file`;
-DROP TABLE IF EXISTS `order_list`;
-DROP TABLE IF EXISTS `users`;
-
 CREATE TABLE `users` (
                          `id` varchar(255) PRIMARY KEY,
                          `password` varchar(255),
@@ -51,6 +44,7 @@ CREATE TABLE `order_product` (
                                  `amount` integer,
                                  `name` varchar(255)
 );
+
 
 ALTER TABLE `product_image` ADD CONSTRAINT `fk_product_image_product`
     FOREIGN KEY (`product_id`) REFERENCES `product` (`id`);

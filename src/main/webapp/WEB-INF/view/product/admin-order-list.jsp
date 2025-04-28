@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <!-- Required meta tags -->
@@ -86,102 +87,78 @@
 <div class="card">
     <div class="row">
         <div class="col-md-12 mx-auto mt-4 d-flex flex-column align-items-center p-3 pt-0">
-            <h5 class="flex-grow-0"><b>상품 목록</b></h5>
+            <h5 class="flex-grow-0"><b>주문 현황</b></h5>
             <ul class="list-group products">
                 <li class="list-group-item d-flex mt-3" style="background-color: #ddd;">
-                    <div class="col-2">사진</div>
-                    <div class="col">이름</div>
+                    <div class="col">번호</div>
+                    <div class="col-3">아이디/이메일</div>
+                    <div class="col-2">주소</div>
                     <div class="col">가격</div>
-                    <div class="col">수량</div>
-                    <div class="col">수정</div>
-                    <div class="col">삭제</div>
+                    <div class="col">주문시간</div>
+                    <div class="col-2">구매내역</div>
+                    <div class="col">취소</div>
                 </li>
-                <c:forEach items="${products}" var="product" varStatus="status">
+                <c:forEach items="${orders}" var="order" varStatus="status">
                     <li class="list-group-item d-flex mt-3">
-                        <div class="col-2"><img class="img-fluid" src="${product.image.url}" alt="">
-                        </div>
                         <div class="col">
-                            <div class="row text-muted">커피콩</div>
-                            <div class="row">${product.name}</div>
+                                ${order.id}
                         </div>
-                        <div class="col">${product.price}원</div>
-                        <div class="col">${product.amount}개</div>
+                        <c:if test="${order.isMember}">
+                            <div class="col-3">
+                                    ${order.userId}
+                            </div>
+                        </c:if>
+                        <c:if test="${not order.isMember}">
+                            <div class="col-3">
+                                    ${order.email}
+                            </div>
+                        </c:if>
+                        <div class="col-2">
+                            <div class="row">${order.address}</div>
+                            <div class="row">${order.addressNumber}</div>
+                        </div>
+                        <div class="col">${order.totalPrice}원</div>
+
+                        <div class="col">
+                                ${order.date}
+                        </div>
+                        <div class="col-2">
+                            <c:forEach items="${order.orderProducts}" var="orderProduct"
+                                       varStatus="status">
+                                ${orderProduct.name} (${orderProduct.amount}개)
+                                <c:if test="${!status.last}">, </c:if>
+                            </c:forEach>
+                        </div>
                         <div class="col action">
                             <button class="btn btn-small btn-outline-dark"
-                                    onclick="window.location.href = '/admin/product/${product.id}'">
-                                수정
-                            </button>
-                        </div>
-                        <div class="col action">
-                            <button class="btn btn-small btn-outline-dark"
-                                    onclick="deleteProduct(${product.id}, '${product.image.path}')">
-                                삭제
+                                    onclick="deleteOrder(${order.id})">취소
                             </button>
                         </div>
                     </li>
                 </c:forEach>
-            </ul>
-            <ul class="pagination mt-3">
-                <c:if test="${currentPage > 1}">
-                    <li class="page-item"><a class="page-link" href="/admin/product/list?page=${currentPage - 1}">이전</a></li>
-                </c:if>
-                <c:if test="${currentPage == 1}">
-                    <li class="page-item disabled">
-                        <span class="page-link">이전</span>
-                    </li>
-                </c:if>
-
-                <c:forEach var="i" begin="1" end="${totalPages}">
-                    <c:choose>
-                        <c:when test="${i == currentPage}">
-                            <li class="page-item active" aria-current="page">
-                                <a class="page-link" href="#">${i}</a>
-                            </li>
-                        </c:when>
-                        <c:otherwise>
-                            <li class="page-item"><a class="page-link" href="/admin/product/list?page=${i}">${i}</a></li>
-                        </c:otherwise>
-                    </c:choose>
-                </c:forEach>
-
-                <c:if test="${currentPage < totalPages}">
-                    <li class="page-item"><a class="page-link" href="/admin/product/list?page=${currentPage + 1}">다음</a></li>
-                </c:if>
-                <c:if test="${currentPage == totalPages}">
-                    <li class="page-item disabled">
-                        <span class="page-link">다음</span>
-                    </li>
-                </c:if>
             </ul>
         </div>
     </div>
 </div>
-<c:if test="${not empty message}">
-    <script>
-      alert("${message}");
-    </script>
-</c:if>
-
 <script>
   const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
   const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
 
-  function deleteProduct(productId, imagePath) {
-    if (!confirm("정말 삭제하시겠습니까?")) return;
+  function deleteOrder(orderId) {
+    if (!confirm("정말 주문 취소하시겠습니까?")) return;
 
-    fetch(`/admin/product/` + productId, {
+    fetch(`/admin/order/` + orderId, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'text/plain',
         [csrfHeader]: csrfToken
       },
-      body: imagePath,
       redirect: 'follow'
     }).then(response => {
       if (response.ok) {
-        window.location.href = '/admin/product/list';
+        window.location.href = '/admin/order';
       } else {
-        alert('삭제 실패');
+        alert('취소 실패');
       }
     });
   }

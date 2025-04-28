@@ -99,7 +99,7 @@ public class ProductService {
             product.setOrderId(nonMember.getId());
             product.setProductId(item.getId());
             product.setAmount(item.getAmount());
-
+            product.setName(item.getName());
             productRepository.insertOrderProduct(product);
 
             // 재고 수량 체크 추가
@@ -139,5 +139,14 @@ public class ProductService {
             throw new CommonException(ResponseCode.INTERNAL_SERVER_ERROR, e);
         }
 
+    }
+
+    public List<ProductDto> getProducts(int page, int pageSize) {
+        int offset = (page - 1) * pageSize;
+        return productRepository.findProducts(offset, pageSize);
+    }
+
+    public int countProducts() {
+        return productRepository.countProducts();
     }
 }

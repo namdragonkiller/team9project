@@ -29,15 +29,15 @@
 
   <insert id="insertPurchase" parameterType="com.grepp.spring.app.model.product.dto.OrderListDto" useGeneratedKeys="true" keyProperty="id">
     INSERT INTO coffee.order_list
-    (email, address, address_number, amount, price, createdAt, is_member, user_id)
+    (email, address, address_number, total_amount, total_price, createdAt, is_member, user_id)
     VALUES(#{email}, #{address}, #{addressNumber}, #{totalAmount}, #{totalPrice}, CURRENT_TIMESTAMP, #{isMember}, #{userId});
   </insert>
 
   <insert id="insertOrderProduct"
     parameterType="com.grepp.spring.app.model.product.dto.OrderProductDto">
     INSERT INTO `coffee`.order_product
-    (order_id, product_id, amount)
-    VALUES (#{orderId}, #{productId}, #{amount});
+    (order_id, product_id, amount, name)
+    VALUES (#{orderId}, #{productId}, #{amount}, #{name});
   </insert>
 
   <select id="selectImg" parameterType="int" resultType="com.grepp.spring.app.model.product.dto.ProductImg">
@@ -65,7 +65,7 @@
     ) AS subquery
     ) AS t
     ON o.id = t.id
-    SET o.amount = o.amount + #{totalAmount},
+    SET o.total_amount = o.total_amount + #{totalAmount},
     o.price = o.price + #{totalPrice};
   </update>
 
@@ -86,4 +86,15 @@
     set ORIGIN_FILE_NAME=#{originFileName}, RENAME_FILE_NAME=#{renameFileName}, SAVE_PATH=#{savePath}
     where product_id = #{productId}
   </update>
+
+  <select id="findProducts" resultType="com.grepp.spring.app.model.product.dto.ProductDto" resultMap="productMap">
+    SELECT * FROM product
+    ORDER BY id ASC
+    LIMIT #{pageSize} OFFSET #{offset}
+  </select>
+
+  <select id="countProducts" resultType="int">
+    SELECT COUNT(*) FROM product
+  </select>
+
 </mapper>

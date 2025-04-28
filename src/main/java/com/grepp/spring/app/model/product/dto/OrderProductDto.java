@@ -9,4 +9,5 @@ public class OrderProductDto {
     private Long orderId; // 주문 id
     private Integer productId; // 제품 id
     private Integer amount;
+    private String name; // 제품 명
 }

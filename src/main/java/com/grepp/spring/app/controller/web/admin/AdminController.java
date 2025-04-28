@@ -2,9 +2,13 @@ package com.grepp.spring.app.controller.web.admin;
 
 import com.grepp.spring.app.controller.web.admin.payload.ProductModifyRequest;
 import com.grepp.spring.app.controller.web.admin.payload.ProductRegistRequest;
+import com.grepp.spring.app.model.order.OrderService;
 import com.grepp.spring.app.model.product.ProductService;
+import com.grepp.spring.app.model.product.dto.OrderListDto;
+import com.grepp.spring.app.model.product.dto.OrderProductDto;
 import com.grepp.spring.app.model.product.dto.ProductDto;
 import jakarta.validation.Valid;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +29,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -35,6 +40,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class AdminController {
 
     private final ProductService productService;
+    private final OrderService orderService;
 
     // 제품 등록 페이지
     @GetMapping("product/regist")
@@ -54,11 +60,17 @@ public class AdminController {
     }
 
     @GetMapping("product/list")
-    public String list(Model model) {
+    public String list(@RequestParam(defaultValue = "1") int page, Model model) {
 
-        List<ProductDto> result = productService.selectAll();
+        int pageSize = 5;
 
-        model.addAttribute("products", result);
+        List<ProductDto> products = productService.getProducts(page, pageSize);
+        int totalProducts = productService.countProducts(); // 총 상품 개수
+        int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
+
+        model.addAttribute("products", products);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", totalPages);
         return "product/admin-product-list";
     }
 
@@ -100,4 +112,28 @@ public class AdminController {
         productService.updateById(id, request.getOldPath(), request.getNewImage(), request.toDto());
         return ResponseEntity.ok("수정 성공");
     }
+
+    @GetMapping("order")
+    public String orderList(Model model) {
+
+        List<OrderListDto> result = orderService.selectAll();
+
+        model.addAttribute("orders", result);
+
+        return "product/admin-order-list";
+    }
+
+    @DeleteMapping("order/{id}")
+    @ResponseBody
+    public ResponseEntity<String> deleteOrder(@PathVariable Integer id) {
+
+        boolean result = orderService.deleteById(id);
+
+        if (result) {
+            return ResponseEntity.ok("취소 성공");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("취소 실패");
+        }
+    }
+
 }

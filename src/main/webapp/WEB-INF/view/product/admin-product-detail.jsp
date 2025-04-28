@@ -130,7 +130,7 @@
                 <span id="error-amount" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <label for="info" class="form-label">Info</label>
+                <label for="info" class="form-label">상세 정보</label>
                 <textarea path="info" class="form-control" id="info"
                           rows="4">${product.info}</textarea>
                 <span id="error-info" class="text-danger"></span>

@@ -38,7 +38,7 @@
                 </label>
             </p>
         </div>
-        <button class="btn brown waves-effect waves-light offset-s1" type="submit" name="action">
+        <button class="btn grey waves-effect waves-light offset-s1" type="submit" name="action">
             로그인
             <i class="material-icons right">send</i>
         </button>

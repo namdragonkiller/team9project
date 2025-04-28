@@ -36,8 +36,8 @@
   <insert id="insertOrderProduct"
     parameterType="com.grepp.spring.app.model.product.dto.OrderProductDto">
     INSERT INTO `coffee`.order_product
-    (order_id, product_id, amount)
-    VALUES (#{orderId}, #{productId}, #{amount});
+    (order_id, product_id, amount, name)
+    VALUES (#{orderId}, #{productId}, #{amount}, #{name});
   </insert>
 
   <select id="selectImg" parameterType="int" resultType="com.grepp.spring.app.model.product.dto.ProductImg">

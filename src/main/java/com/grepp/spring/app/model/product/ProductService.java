@@ -99,7 +99,7 @@ public class ProductService {
             product.setOrderId(nonMember.getId());
             product.setProductId(item.getId());
             product.setAmount(item.getAmount());
-
+            product.setName(item.getName());
             productRepository.insertOrderProduct(product);
 
             // 재고 수량 체크 추가

@@ -25,6 +25,7 @@ public class OrderListDto {
         private Integer id; // product_id
         private Integer price;
         private Integer amount;
+        private String name;
     }
 
     public ProductItemDTO getItem() {

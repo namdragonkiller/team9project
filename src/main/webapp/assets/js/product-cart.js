@@ -73,8 +73,9 @@ function updateSummary() {
     const idInput = `<input type="hidden" name="items[${index}].id" value="${data.id}">`;
     const amountInput = `<input type="hidden" name="items[${index}].amount" value="${data.count}">`;
     const priceInput = `<input type="hidden" name="items[${index}].price" value="${data.price}">`;
+    const nameInput = `<input type="hidden" name="items[${index}].name" value="${data.name}">`;
 
-    hiddenFieldsContainer.innerHTML += idInput + amountInput + priceInput;
+    hiddenFieldsContainer.innerHTML += idInput + amountInput + priceInput + nameInput;
 
     index++;
   }
@@ -96,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const count = parseInt(
         itemElement.querySelector('.col-3').textContent.replace(/[^0-9]/g, ''));
 
-    summaryItems[name] = {count, price, id};
+    summaryItems[name] = {count, price, id, name};
   });
 
   // 2. 초기 총금액 계산 + UI 반영
@@ -152,6 +153,8 @@ document.getElementById('purchase-form').addEventListener('submit',
           items[items.length - 1].amount = value;  // 마지막 항목에 amount 추가
         } else if (input.name.includes('price')) {
           items[items.length - 1].price = value;  // 마지막 항목에 price 추가
+        } else if (input.name.includes('name')) {
+          items[items.length - 1].name = value;  // 마지막 항목에 name 추가
         }
       });
 
@@ -173,6 +176,7 @@ document.getElementById('purchase-form').addEventListener('submit',
         formData.append(`items[${index}].id`, item.id);
         formData.append(`items[${index}].amount`, item.amount);
         formData.append(`items[${index}].price`, item.price);
+        formData.append(`items[${index}].name`, item.name);
       });
 
       // Ajax 요청 보내기 (fetch API 사용)

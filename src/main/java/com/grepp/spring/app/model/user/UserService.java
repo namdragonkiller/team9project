@@ -42,13 +42,16 @@ public class UserService {
 
         Optional<User> optional = userRepository.selectById(id);
 
-        if (optional.isEmpty())
-            return Principal.ANONYMOUS;
+        if (optional.isEmpty()){
+            throw new IllegalArgumentException("아이디나 비밀번호가 틀렸습니다");
+        }
+
 
         User user = optional.get();
 
-        if (!user.getPassword().equals(password))
-            return Principal.ANONYMOUS;
+        if (!user.getId().equals(id) || !user.getPassword().equals(password)){
+            throw new IllegalArgumentException("아이디나 비밀번호가 틀렸습니다");
+        }
 
         return new Principal(id, List.of(Role.ROLE_USER));
     }

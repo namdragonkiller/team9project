@@ -46,6 +46,22 @@ public class UserController {
         return "user/signin";
     }
 
+    @PostMapping("signin")
+    public String signin(@Valid SigninForm form,
+        BindingResult bindingResult,
+        Model model){
+        if (bindingResult.hasErrors()){
+            return "user/signin";
+        }
+        try{
+            userService.signin(form.getId(), form.getPassword());
+        }catch (Exception e){
+            model.addAttribute("errorMessage", "아이디나 비밀번호를 확인하세요");
+            return "user/signin";
+        }
+        return "redirect:/index";
+    }
+
     @GetMapping("promote")
     public String promote(PromoteForm form) {
         return "user/promote";

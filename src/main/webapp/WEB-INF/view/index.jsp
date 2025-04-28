@@ -116,7 +116,7 @@
                             <br>
                         </c:if>
                         <div class="price center-align custom-price">
-                            <p><c:out value="${product.price}"/>원</p>
+                            <p><fmt:formatNumber value="${product.price}" type="number" groupingUsed="true"/>원</p>
                         </div>
                     </div>
                 </div>

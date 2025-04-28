@@ -66,7 +66,7 @@
     ) AS t
     ON o.id = t.id
     SET o.total_amount = o.total_amount + #{totalAmount},
-    o.price = o.price + #{totalPrice};
+    o.total_price = o.total_price + #{totalPrice};
   </update>
 
   <update id="updateProductAmountById" >
@@ -89,7 +89,7 @@
 
   <select id="findProducts" resultType="com.grepp.spring.app.model.product.dto.ProductDto" resultMap="productMap">
     SELECT * FROM product
-    ORDER BY id ASC
+    ORDER BY id DESC
     LIMIT #{pageSize} OFFSET #{offset}
   </select>
 

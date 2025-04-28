@@ -11,7 +11,7 @@
 
 <!--  resultMap="orderMap" -->
   <select id="selectAll" parameterType="com.grepp.spring.app.model.product.dto.OrderListDto" resultMap="orderMap">
-    select * from order_list;
+    select * from order_list ORDER BY createdAt DESC ;
   </select>
 
   <select id="selectByOrderProductId" parameterType="int" resultType="com.grepp.spring.app.model.product.dto.OrderProductDto">

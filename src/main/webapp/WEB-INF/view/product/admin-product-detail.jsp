@@ -1,33 +1,18 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ include file="/WEB-INF/view/include/page.jsp" %>
 <html>
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <sec:csrfMetaTags/>
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
-          crossorigin="anonymous">
+    <title>Grepp</title>
+    <%@ include file="/WEB-INF/view/include/static.jsp" %>
     <style>
-      body {
-        background: #ddd;
-      }
-
       .card {
         margin: auto;
         max-width: 950px;
         width: 90%;
         box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         border-radius: 1rem;
-        border: transparent
+        border: transparent;
       }
-
       .summary {
         background-color: #ddd;
         border-top-right-radius: 1rem;
@@ -42,111 +27,85 @@
           border-bottom-left-radius: 1rem
         }
       }
-
-      .row {
-        margin: 0
-      }
-
-      .title b {
-        font-size: 1.5rem
-      }
-
-      .col-2,
-      .col {
-        padding: 0 1vh
-      }
-
-      img {
-        width: 3.5rem
-      }
-
-      hr {
-        margin-top: 1.25rem
-      }
-
-      .products {
-        width: 100%;
-      }
-
-      .products .price, .products .action {
-        line-height: 38px;
-      }
-
-      .products .action {
-        line-height: 38px;
-      }
-
       .product-image {
         width: 100%;
         height: auto;
         object-fit: contain;
         max-height: 400px; /* 필요한 경우 이미지 최대 높이 지정 */
       }
-
+      .button-group {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+      }
     </style>
-    <title>Hello, world!</title>
 </head>
-<body class="container-fluid">
-<div class="row justify-content-center m-4">
-    <h1 class="text-center">Grids & Circle</h1>
-</div>
-<div class="card">
-    <div class="row">
-        <div class="col-md-8 mt-4 d-flex flex-column p-3 pt-0 justify-content-center">
-            <img class="img-fluid rounded mb-3 product-image" id="productImage"
-                 src="${product.image.url}"
-                 alt="${product.image.originFileName}">
-            <div class="d-flex justify-content-center gap-2 my-2">
-                <input type="file" id="newImage" name="newImage" accept="image/*"
-                       style="display: none;" onchange="previewImage(event)">
-                <button class="btn btn-outline-dark"
-                        onclick="document.getElementById('newImage').click()">사진 변경
-                </button>
-                <button class="btn btn-outline-dark"
-                        onclick="rollback('${product.image.url}', '${product.image.originFileName}')">
-                    되돌리기
-                </button>
+<body>
+<%@ include file="/WEB-INF/view/include/header.jsp" %>
+<%@ include file="/WEB-INF/view/include/sidenav.jsp" %>
+
+<main class="container">
+    <div class="card">
+        <div class="row">
+            <!-- 상품 이미지 부분 -->
+            <div class="col s12 m8 mt-4 d-flex flex-column p-3 pt-0 justify-center" style="margin-top: 4vh">
+                <img class="rounded mb-3 product-image" id="productImage"
+                     src="${product.image.url}"
+                     alt="${product.image.originFileName}">
+                <div class="center-align gap-2 my-2" style="margin-top: 10px">
+                    <input type="file" id="newImage" name="newImage" accept="image/*"
+                           style="display: none;" onchange="previewImage(event)">
+                    <button class="waves-effect waves-light btn btn-outline-dark black"
+                            onclick="document.getElementById('newImage').click()">사진 변경
+                    </button>
+                    <button class="waves-effect waves-light btn btn-outline-dark black"
+                            onclick="rollback('${product.image.url}', '${product.image.originFileName}')">
+                        되돌리기
+                    </button>
+                </div>
+            </div>
+
+            <!-- 상품 상세 부분 -->
+            <div class="col s12 m4 summary p-4" style="padding: 4vh;">
+                <div>
+                    <h5 class="m-0 p-0"><b>상품 상세</b></h5>
+                </div>
+                <hr>
+                <div class="input-field mb-3">
+                    <label for="name">이름</label>
+                    <input value="${product.name}" type="text" class="validate" id="name"/>
+                    <span id="error-name" class="helper-text red-text"></span>
+                </div>
+                <div class="input-field mb-3">
+                    <label for="price">가격</label>
+                    <input value="${product.price}" type="text" class="validate" id="price"/>
+                    <span id="error-price" class="helper-text red-text"></span>
+                </div>
+                <div class="input-field mb-3">
+                    <label for="amount">수량</label>
+                    <input value="${product.amount}" type="text" class="validate" id="amount"/>
+                    <span id="error-amount" class="helper-text red-text"></span>
+                </div>
+                <div class="input-field mb-3">
+                    <label for="info">상세 정보</label>
+                    <textarea path="info" class="materialize-textarea" id="info"
+                              rows="4">${product.info}</textarea>
+                    <span id="error-info" class="helper-text red-text"></span>
+                </div>
+                <div class="button-group">
+                    <button class="waves-effect waves-light btn col s5 black"
+                            onclick="updateProduct(${product.id}, '${product.image.path}')">
+                        수정
+                    </button>
+                    <button class="waves-effect waves-light btn col s5 black"
+                            onclick="window.location.href = '/admin/product/list'">취소
+                    </button>
+                </div>
             </div>
         </div>
 
-        <div class="col-md-4 summary p-4">
-            <div>
-                <h5 class="m-0 p-0"><b>상품 상세</b></h5>
-            </div>
-            <hr>
-            <div class="mb-3">
-                <label for="name" class="form-label">이름</label>
-                <input value="${product.name}" type="text" class="form-control mb-1" id="name"/>
-                <span id="error-name" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label for="price" class="form-label">가격</label>
-                <input value="${product.price}" type="text" class="form-control mb-1" id="price"/>
-                <span id="error-price" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label for="amount" class="form-label">수량</label>
-                <input value="${product.amount}" type="text" class="form-control" id="amount"/>
-                <span id="error-amount" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label for="info" class="form-label">상세 정보</label>
-                <textarea path="info" class="form-control" id="info"
-                          rows="4">${product.info}</textarea>
-                <span id="error-info" class="text-danger"></span>
-            </div>
-            <div class="d-flex justify-content-between">
-                <button class="btn btn-dark w-100 me-2"
-                        onclick="updateProduct(${product.id}, '${product.image.path}')">
-                    수정
-                </button>
-                <button class="btn btn-dark w-100"
-                        onclick="window.location.href = '/admin/product/list'">취소
-                </button>
-            </div>
-        </div>
     </div>
-</div>
+</main>
 <c:if test="${not empty message}">
     <script>
       alert("${message}");
@@ -229,5 +188,7 @@
     productImage.alt = name;
   }
 </script>
+<%@ include file="/WEB-INF/view/include/footer.jsp" %>
+<script src="${context}/assets/js/sidebar.js" defer></script>
 </body>
 </html>

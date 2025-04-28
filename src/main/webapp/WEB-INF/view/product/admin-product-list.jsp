@@ -1,24 +1,10 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ include file="/WEB-INF/view/include/page.jsp" %>
 <html>
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <sec:csrfMetaTags/>
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
-          crossorigin="anonymous">
+    <title>Grepp</title>
+    <%@ include file="/WEB-INF/view/include/static.jsp" %>
     <style>
-      body {
-        background: #ddd;
-      }
-
       .card {
         margin: auto;
         max-width: 950px;
@@ -28,140 +14,113 @@
         border: transparent
       }
 
-      .summary {
-        background-color: #ddd;
-        border-top-right-radius: 1rem;
-        border-bottom-right-radius: 1rem;
-        padding: 4vh;
-        color: rgb(65, 65, 65) @tringGe wv
-      }
-
-      @media (max-width: 767px) {
-        .summary {
-          border-top-right-radius: unset;
-          border-bottom-left-radius: 1rem
-        }
-      }
-
-      .row {
-        margin: 0
-      }
-
-      .title b {
-        font-size: 1.5rem
-      }
-
-      .col-2,
-      .col {
-        padding: 0 1vh
-      }
-
       img {
         width: 3.5rem
       }
 
-      hr {
-        margin-top: 1.25rem
+      .flex {
+        display: flex;
+        align-items: center;
       }
-
-      .products {
-        width: 100%;
-      }
-
-      .products .price, .products .action {
-        line-height: 38px;
-      }
-
-      .products .action {
-        line-height: 38px;
-      }
-
     </style>
-    <title>Hello, world!</title>
 </head>
-<body class="container-fluid">
-<div class="row justify-content-center m-4">
-    <h1 class="text-center">Grids & Circle</h1>
-</div>
-<div class="card">
-    <div class="row">
-        <div class="col-md-12 mx-auto mt-4 d-flex flex-column align-items-center p-3 pt-0">
-            <h5 class="flex-grow-0"><b>상품 목록</b></h5>
-            <ul class="list-group products">
-                <li class="list-group-item d-flex mt-3" style="background-color: #ddd;">
-                    <div class="col-2">사진</div>
-                    <div class="col">이름</div>
-                    <div class="col">가격</div>
-                    <div class="col">수량</div>
-                    <div class="col">수정</div>
-                    <div class="col">삭제</div>
-                </li>
-                <c:forEach items="${products}" var="product" varStatus="status">
-                    <li class="list-group-item d-flex mt-3">
-                        <div class="col-2"><img class="img-fluid" src="${product.image.url}" alt="">
-                        </div>
-                        <div class="col">
-                            <div class="row text-muted">커피콩</div>
-                            <div class="row">${product.name}</div>
-                        </div>
-                        <div class="col">${product.price}원</div>
-                        <div class="col">${product.amount}개</div>
-                        <div class="col action">
-                            <button class="btn btn-small btn-outline-dark"
-                                    onclick="window.location.href = '/admin/product/${product.id}'">
-                                수정
-                            </button>
-                        </div>
-                        <div class="col action">
-                            <button class="btn btn-small btn-outline-dark"
-                                    onclick="deleteProduct(${product.id}, '${product.image.path}')">
-                                삭제
-                            </button>
-                        </div>
-                    </li>
-                </c:forEach>
-            </ul>
-            <ul class="pagination mt-3">
-                <c:if test="${currentPage > 1}">
-                    <li class="page-item"><a class="page-link" href="/admin/product/list?page=${currentPage - 1}">이전</a></li>
-                </c:if>
-                <c:if test="${currentPage == 1}">
-                    <li class="page-item disabled">
-                        <span class="page-link">이전</span>
-                    </li>
-                </c:if>
+<body>
+<%@ include file="/WEB-INF/view/include/header.jsp" %>
+<%@ include file="/WEB-INF/view/include/sidenav.jsp" %>
 
-                <c:forEach var="i" begin="1" end="${totalPages}">
-                    <c:choose>
-                        <c:when test="${i == currentPage}">
-                            <li class="page-item active" aria-current="page">
-                                <a class="page-link" href="#">${i}</a>
-                            </li>
-                        </c:when>
-                        <c:otherwise>
-                            <li class="page-item"><a class="page-link" href="/admin/product/list?page=${i}">${i}</a></li>
-                        </c:otherwise>
-                    </c:choose>
-                </c:forEach>
+<main class="container">
+    <div class="card">
+        <div class="row">
+            <div class="col s12 mt-4 p-3 pt-0">
+                <!-- 상품 목록 제목 가운데 정렬 -->
+                <h5 class="center-align"><b>상품 목록</b></h5>
 
-                <c:if test="${currentPage < totalPages}">
-                    <li class="page-item"><a class="page-link" href="/admin/product/list?page=${currentPage + 1}">다음</a></li>
-                </c:if>
-                <c:if test="${currentPage == totalPages}">
-                    <li class="page-item disabled">
-                        <span class="page-link">다음</span>
+                <ul class="collection with-header">
+                    <!-- 컬럼 헤더 -->
+                    <li class="collection-header grey lighten-2">
+                        <div class="row" style="margin-bottom: 0">
+                            <div class="col s2 center-align">사진</div>
+                            <div class="col s2 center-align">이름</div>
+                            <div class="col s2 center-align">가격</div>
+                            <div class="col s2 center-align">수량</div>
+                            <div class="col s2 center-align">수정</div>
+                            <div class="col s2 center-align">삭제</div>
+                        </div>
                     </li>
-                </c:if>
-            </ul>
+
+                    <!-- 상품 목록 반복 -->
+                    <c:forEach items="${products}" var="product" varStatus="status">
+                        <li class="collection-item">
+                            <div class="row flex">
+                                <div class="col s2 center-align">
+                                    <img class="responsive-img" src="${product.image.url}" alt="">
+                                </div>
+                                <div class="col s2 center-align">
+                                        ${product.name}
+                                </div>
+                                <div class="col s2 center-align">${product.price}원</div>
+                                <div class="col s2 center-align">${product.amount}개</div>
+                                <div class="col s2 center-align">
+                                    <a class="waves-effect waves-light btn-small"
+                                       href="/admin/product/${product.id}">
+                                        수정
+                                    </a>
+                                </div>
+                                <div class="col s2 center-align">
+                                    <button class="waves-effect waves-light btn-small red lighten-1"
+                                            onclick="deleteProduct(${product.id}, '${product.image.path}')">
+                                        삭제
+                                    </button>
+                                </div>
+                            </div>
+                        </li>
+                    </c:forEach>
+                </ul>
+
+                <!-- 페이지네이션 -->
+                <ul class="pagination center">
+                    <c:if test="${currentPage > 1}">
+                        <li class="waves-effect">
+                            <a href="/admin/product/list?page=${currentPage - 1}"><i
+                                    class="material-icons">chevron_left</i></a>
+                        </li>
+                    </c:if>
+                    <c:if test="${currentPage == 1}">
+                        <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a>
+                        </li>
+                    </c:if>
+
+                    <c:forEach var="i" begin="1" end="${totalPages}">
+                        <c:choose>
+                            <c:when test="${i == currentPage}">
+                                <li class="active"><a href="#!">${i}</a></li>
+                            </c:when>
+                            <c:otherwise>
+                                <li class="waves-effect">
+                                    <a href="/admin/product/list?page=${i}">${i}</a>
+                                </li>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+
+                    <c:if test="${currentPage < totalPages}">
+                        <li class="waves-effect"><a href="/admin/product/list?page=${currentPage + 1}"><i class="material-icons">chevron_right</i></a></li>
+                    </c:if>
+                    <c:if test="${currentPage == totalPages}">
+                        <li class="disabled"><a href="#!"><i class="material-icons">chevron_right</i></a>
+                        </li>
+                    </c:if>
+                </ul>
+            </div>
         </div>
     </div>
-</div>
+
+</main>
 <c:if test="${not empty message}">
     <script>
       alert("${message}");
     </script>
 </c:if>
-
 <script>
   const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
   const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
@@ -186,5 +145,7 @@
     });
   }
 </script>
+<%@ include file="/WEB-INF/view/include/footer.jsp" %>
+<script src="${context}/assets/js/sidebar.js" defer></script>
 </body>
 </html>

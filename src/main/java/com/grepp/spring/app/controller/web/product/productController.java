@@ -32,29 +32,7 @@ public class productController {
     private final ProductService productService;
     private final UserService userService;
 
-    // 제품 리스트 페이지
-    // 로그인 한 경우에는 회원 정보도 모델에 담아 뷰에 전달
-    // 로그인 한 경우, 안 한 경우 모두 똑같이 뷰에 전달
-    @GetMapping("/list")
-    public String list(Authentication authentication, Model model, HttpServletRequest request) {
-        User userInfo = null;
-        String userId = null;
-        if(authentication != null) {
-            userId = authentication.getName();
-        }
-
-        if(userId != null && !userId.isEmpty()) {
-            userInfo = userService.findById(userId);
-        }
-        var result = productService.selectAll();
-        log.info("result : {}", result);
-
-        model.addAttribute("userInfo", userInfo);
-        model.addAttribute("productList", result);
-        return "product/product-list";
-    }
-
-    // 리스트 페이지 페이징
+    // 장바구니 페이지 (페이징 처리 o)
     @GetMapping("/cart")
     public String showCart(
         @RequestParam(defaultValue = "0") int page,
@@ -77,8 +55,6 @@ public class productController {
             // 부분 리스트 추출
             List<ProductCartDto.ProductItemDTO> pagedItems = items.subList(start, end);
 
-
-            //
             User userInfo = null;
             String userId = null;
             if(authentication != null) {
@@ -93,21 +69,10 @@ public class productController {
             model.addAttribute("cartList", pagedItems);
             model.addAttribute("currentPage", page);
             model.addAttribute("totalPages", totalPages);
-            log.info("totalPages:::{}", totalPages);
         }
 
         return "product/product-cart";
     }
-
-//    // 장바구니 페이지
-//    @GetMapping("/cart")
-//    public String showCart(HttpServletRequest request, Model model) {
-//
-//        Object cartList = request.getSession().getAttribute("cartList");
-//
-//        model.addAttribute("cartList", cartList);
-//        return "product/product-cart";
-//    }
 
     // 장바구니 전달
     @PostMapping("/goCart")
@@ -118,12 +83,11 @@ public class productController {
         if(authentication != null) {
             userId = authentication.getName();
         }
-        log.info("form::{}", form);
 
         // DTO로 변환된 장바구니 리스트
         var cartList = form.toDto(userId);
-        log.info("cartList::{}", cartList);
-        // ✅ 세션에 저장
+
+        // 세션에 저장
         request.getSession().setAttribute("cartList", cartList);
 
         return "redirect:/product/cart";

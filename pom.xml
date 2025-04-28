@@ -24,6 +24,11 @@
     </plugins>
   </build>
   <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-jdbc</artifactId>
+      <version>3.4.5</version>
+    </dependency>
     <!--  Spring  -->
     <dependency>
       <artifactId>spring-webmvc</artifactId>

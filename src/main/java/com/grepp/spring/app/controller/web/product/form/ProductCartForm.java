@@ -13,10 +13,8 @@ public class ProductCartForm {
 
     private String email;
 
-//    @NotNull(message = "주소는 필수입니다.")
     private String address;
 
-//    @NotNull
     private String addressNumber;
 
     private String userId;

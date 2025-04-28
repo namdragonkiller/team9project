@@ -115,13 +115,13 @@ document.getElementById('purchase-form').addEventListener('submit',
       const errorElement2 = document.querySelector('.red.address');
       const errorElement3 = document.querySelector('.red.addressNumber');
 
-      if (!email) {
-        if (errorElement1) {
-          errorElement1.style.display = 'block';
+      if(errorElement1) {
+        if (!email) {
+            errorElement1.style.display = 'block';
+          return;
+        } else {
+          errorElement1.style.display = 'none';
         }
-        return;
-      }else {
-        errorElement1.style.display = 'none';
       }
       if (!address) {
         if (errorElement2) {

@@ -107,28 +107,28 @@
 
                         <!-- 이름 -->
                         <div class="mb-3">
-                            <label for="name" class="form-label">Name</label>
+                            <label for="name" class="form-label">이름</label>
                             <form:input path="name" class="form-control" id="name"/>
                             <form:errors path="name" cssClass="text-danger"/>
                         </div>
 
                         <!-- 가격 -->
                         <div class="mb-3">
-                            <label for="price" class="form-label">Price</label>
+                            <label for="price" class="form-label">가격</label>
                             <form:input path="price" class="form-control" id="price"/>
                             <form:errors path="price" cssClass="text-danger"/>
                         </div>
 
                         <!-- 수량 -->
                         <div class="mb-3">
-                            <label for="amount" class="form-label">Amount</label>
+                            <label for="amount" class="form-label">수량</label>
                             <form:input path="amount" class="form-control" id="amount"/>
                             <form:errors path="amount" cssClass="text-danger"/>
                         </div>
 
                         <!-- 정보 -->
                         <div class="mb-3">
-                            <label for="info" class="form-label">Info</label>
+                            <label for="info" class="form-label">상세 정보</label>
                             <form:textarea path="info" class="form-control" id="info" rows="4"/>
                             <form:errors path="info" cssClass="text-danger"/>
                         </div>

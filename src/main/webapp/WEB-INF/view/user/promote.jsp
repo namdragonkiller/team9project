@@ -24,7 +24,7 @@
             <form:errors path="adminPassword" cssClass="helper-text"/>
         </div>
     </div>
-        <button class="btn brown waves-effect waves-light offset-s1" type="submit" name="action">
+        <button class="btn grey waves-effect waves-light offset-s1" type="submit" name="action">
             관리자 권한 승인
             <i class="material-icons right">send</i>
         </button>

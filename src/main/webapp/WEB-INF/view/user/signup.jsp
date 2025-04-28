@@ -58,7 +58,7 @@
 
             </div>
 
-            <button class="btn brown waves-effect waves-light offset-s1" type="submit" name="action">
+            <button class="btn grey waves-effect waves-light offset-s1" type="submit" name="action">
                 회원가입
                 <i class="material-icons right">send</i>
             </button>
